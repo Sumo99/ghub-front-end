@@ -4,25 +4,26 @@ import "./App.css";
 
 import { Provider } from './context';
 
-class App extends Component {
-  render() {
-    return (
-      <Provider>
-        <Router>
-          <div className="App">
-          {/*Header / Navigation here*/}
-            <div className="container">
-              <Switch>
-                <Route exact path='/' component={} />
-                <Route path='/results/:user' component={} />
-                <Route component={} /> {/*Not Found Component here*/}
-              </Switch>
-            </div>
+const App = () => {
+  return (
+    <Provider>
+      <Router>
+        <div className="App">
+        {/*Header / Navigation here*/}
+          <div className="container">
+            <Switch>
+              <Route exact path='/' component={} />
+              <Route path='/login' component={} />
+              <Route exact path='/messages' component={} />
+              <Route exact path='/messages/compose' component={} />
+              <Route path='/results/:user' component={} />
+              <Route component={} /> {/*Not Found Component here*/}
+            </Switch>
           </div>
-        </Router>
-      </Provider>
-      )
-  }
+        </div>
+      </Router>
+    </Provider>
+  )
 }
 
 export default App;
