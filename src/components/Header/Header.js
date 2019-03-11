@@ -12,12 +12,13 @@ const headerStyle = {
   right: "0"
 };
 
-const Header = () => {
+const Header = props => {
   const [searchInput, updateSearchInput] = useState("");
 
   const logoutAction = () => {
     /*
         logout dispatch here
+        .then history.push('/')
         */
   };
 
@@ -25,7 +26,7 @@ const Header = () => {
     e.preventDefault();
     /*
         search dispatch here
-      &.then clear search input*/
+      &.then  history.push(`/results/${searchInput}`) clear search input &*/
   };
   return (
     <Consumer>
@@ -84,7 +85,7 @@ const Header = () => {
                   <div className="flex-self-center flex-auto col-12 ml-2 ml-lg-3">
                     <form
                       autoComplete="off"
-                      className="mb-0 position-relative mx-2 anim-slide-in"
+                      className="mb-0 position-relative mx-2"
                       onSubmit={handleFormSubmit}
                     >
                       <input
