@@ -2,8 +2,12 @@ import React, { Component } from "react";
 
 export default class LoginView extends Component {
   state = {
+    username: '',
     email: '',
     password: '',
+    isNewRegistrant: false,
+    error: null, 
+    loading: false,
   }
 
   handleInput = e => {
@@ -13,7 +17,7 @@ export default class LoginView extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
-      email: '',
+      username: '',
       password: '',
     })
     this.props.history.push('/');
@@ -31,18 +35,18 @@ export default class LoginView extends Component {
             <div className="Box-body">
               <form onSubmit={this.handleSubmit}>
                 <fieldset className="my-2">
-                  <label className="d-block mb-2" htmlFor="email">
-                    Email Address
+                  <label className="d-block mb-2" htmlFor="username">
+                    Username
                   </label>
                   <input
                     className="form-control width-full mb-2"
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Email address"
-                    aria-label="Email address"
+                    id="username"
+                    name="username"
+                    type="text"
+                    placeholder="username"
+                    aria-label="username"
                     onChange={this.handleInput}
-                    value={this.state.email}
+                    value={this.state.username}
                   />
                 </fieldset>
                 <fieldset className="mb-2">
