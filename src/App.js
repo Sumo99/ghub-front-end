@@ -1,16 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.scss";
 
-import { Provider } from './context';
-import LoginView from './views/LoginView';
+import { Provider } from "./context";
+import Header from "./components/Header/Header";
+import LoginView from "./views/LoginView";
 
 const App = () => {
   return (
     <Provider>
       <Router>
         <div className="App">
-        {/*Header / Navigation here*/}
+        <Header />
           <div>
             <Switch>
               {/* <Route exact path='/dashboard' component={} /> */}
@@ -23,7 +24,7 @@ const App = () => {
         </div>
       </Router>
     </Provider>
-  )
-}
+  );
+};
 
 export default App;
