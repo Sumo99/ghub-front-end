@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@githubprimer/octicons-react": "^8.5.0",
     "axios": "^0.18.0",
     "node-sass": "^4.11.0",
     "primer": "^11.0.0",

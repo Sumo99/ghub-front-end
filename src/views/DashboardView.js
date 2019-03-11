@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Octicon, { ChevronRight } from "@githubprimer/octicons-react";
 
 const emptyForm = {
   username: ""
@@ -48,7 +49,7 @@ const DashboardView = () => {
               type="submit"
               onClick={handleSubmit}
             >
-              Search
+              Search <Octicon icon={ChevronRight} />
             </button>
           </div>
         </form>
