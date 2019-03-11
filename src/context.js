@@ -12,8 +12,14 @@ const reducer = (state, action) => {
 
 export class Provider extends Component {
   state = {
+    authorized: false,
     dispatch: action => this.setState(state => reducer(state, action))
   };
+
+  async componentDidMount() {
+    // check authorization
+  }
+
   render() {
     return (
       <Context.Provider value={this.state}>
