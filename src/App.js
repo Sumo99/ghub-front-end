@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import "./App.css";
 
@@ -12,12 +12,11 @@ const App = () => {
         {/*Header / Navigation here*/}
           <div className="container">
             <Switch>
-              <Route exact path='/' component={} />
+              <Route exact path='/dashboard' component={} />
               <Route path='/login' component={} />
-              <Route exact path='/messages' component={} />
-              <Route exact path='/messages/compose' component={} />
               <Route path='/results/:user' component={} />
               <Route component={} /> {/*Not Found Component here*/}
+              <Redirect from='/' to='/login' />
             </Switch>
           </div>
         </div>
