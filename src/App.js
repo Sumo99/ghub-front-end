@@ -4,20 +4,21 @@ import "./App.scss";
 
 import { Provider } from "./context";
 import Header from "./components/Header/Header";
+import LoginView from "./views/LoginView";
 
 const App = () => {
   return (
     <Provider>
       <Router>
         <div className="App">
-          <Header />
-          <div className="container">
+        <Header />
+          <div>
             <Switch>
-              {/*<Route exact path='/dashboard' component={} />
-              <Route path='/login' component={} />
-              <Route path='/results/:user' component={} />
-              <Route component={} />
-              <Redirect from='/' to='/login' />*/}
+              {/* <Route exact path='/dashboard' component={} /> */}
+              <Route path='/login' component={LoginView} />
+              {/* <Route path='/results/:user' component={} /> */}
+              {/* <Route component={} /> Not Found Component here */}
+              <Redirect from='/' to='/login' />
             </Switch>
           </div>
         </div>
