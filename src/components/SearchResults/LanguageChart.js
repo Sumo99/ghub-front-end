@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import sumBy from "lodash/fp/sumBy";
 import sortBy from "lodash/fp/sortBy";
 import { format } from "d3";
@@ -12,8 +13,8 @@ const LanguageChart = ({ languages }) => {
         {sortBy("size", languages)
           .reverse()
           .map(({ name, color, size }) => (
-            <>
-              <dt key={name} className="pt-2">
+            <React.Fragment key={name}>
+              <dt className="pt-2">
                 <strong>{name}</strong> {format(".1%")(size / sizeTotal)}
               </dt>
               <dd>
@@ -21,16 +22,27 @@ const LanguageChart = ({ languages }) => {
                   style={{
                     height: "1rem",
                     backgroundColor: color,
-                    width: format(".1%")(size / sizeTotal),
-                    textShadow: "1px 1px 1px white"
+                    width: format(".1%")(size / sizeTotal)
                   }}
                 />
               </dd>
-            </>
+            </React.Fragment>
           ))}
       </dl>
     </section>
   );
 };
+
+export const LanguageChartProps = PropTypes.shape({
+  languages: PropTypes.arrayOf(
+    PropTypes.shape({
+      size: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired
+    }).isRequired
+  )
+}).isRequired;
+
+LanguageChart.propTypes = LanguageChartProps;
 
 export default LanguageChart;

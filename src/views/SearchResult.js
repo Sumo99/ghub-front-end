@@ -1,7 +1,4 @@
 import React from "react";
-import sumBy from "lodash/fp/sumBy";
-import sortBy from "lodash/fp/sortBy";
-import { format } from "d3";
 
 import { ProfileHeader, LanguageChart } from "../components/SearchResults";
 
@@ -23,7 +20,7 @@ const _data = {
     {
       name: "CSS",
       color: "#563d7c",
-      size: 1558
+      size: 16558
     },
     {
       name: "HTML",
@@ -42,6 +39,7 @@ const SearchResults = ({ data = _data }) => (
   <>
     <ProfileHeader user={data.user} />
     <div className="container-lg d-flex flex-wrap flex-justify-around">
+      <LanguageChart languages={data.languages} />
       <LanguageChart languages={data.languages} />
     </div>
   </>

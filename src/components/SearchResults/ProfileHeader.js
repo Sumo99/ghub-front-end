@@ -1,10 +1,15 @@
 import React from "react";
+import PropTypes from "prop-types";
 import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 const ProfileHeader = ({ user }) => (
   <header className="container-lg mt-4 d-flex">
     <figure className="u-photo col-2 d-flex flex-items-center flex-items-center flex-md-items-start">
-      <img className="width-full avatar mb-2 mb-md-0" src={user.avatarUrl} />
+      <img
+        className="width-full avatar mb-2 mb-md-0"
+        alt={user.name}
+        src={user.avatarUrl}
+      />
     </figure>
     <div className="vcard-names-container py-3 js-sticky js-user-profile-sticky-fields">
       <h1 className="vcard-names">
@@ -21,5 +26,16 @@ const ProfileHeader = ({ user }) => (
     </div>
   </header>
 );
+
+export const ProfileHeaderProps = {
+  user: PropTypes.shape({
+    avatarUrl: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    login: PropTypes.string.isRequired
+  }).isRequired
+};
+
+ProfileHeader.propTypes = ProfileHeaderProps;
 
 export default ProfileHeader;
