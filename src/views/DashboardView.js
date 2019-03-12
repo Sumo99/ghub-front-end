@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Consumer } from "../context";
+import { Consumer } from "../context/context";
 import Octicon, { ChevronRight } from "@githubprimer/octicons-react";
 
 const DashboardView = () => {
