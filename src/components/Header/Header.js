@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
 import "./Header.scss";
 
 import { Consumer } from "../../context";

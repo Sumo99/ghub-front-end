@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 
 const Context = React.createContext();
 
@@ -22,10 +21,20 @@ const reducer = (state, action) => {
     case "LOG_IN":
       return {
         ...state,
-        username: action.payload.user,
-        authorized: true,
-        error: ""
       };
+    case 'LOG_IN_SUCCESS':
+      return {
+        ...state,
+        authorized: true,
+        key: action.payload,
+        error: ''
+      }
+    case 'LOG_IN_FAILURE':
+      return {
+        ...state,
+        authorized: false,
+        error: action.payload
+      }
     case "LOG_OUT":
       return {
         ...state,
@@ -66,6 +75,7 @@ export class Provider extends Component {
     results: [],
     username: "",
     error: "",
+    key: '',
     dispatch: action => this.setState(state => reducer(state, action))
   };
 
