@@ -24,7 +24,7 @@ const App = () => {
               {/* <Route exact path='/dashboard' component={} /> */}
               <Route path="/login" component={LoginView} />
               <Route path="/results/" component={SearchResult} />
-              <Redirect from="/" to="/login" />
+              <Redirect exact from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>
           </div>

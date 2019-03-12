@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 import "./Header.scss";
 
 import { Consumer } from "../../context";
@@ -22,8 +23,9 @@ const Header = props => {
         */
   };
 
-  const handleFormSubmit = e => {
+  const handleFormSubmit = (e, dispatch) => {
     e.preventDefault();
+
     /*
         search dispatch here
       &.then  history.push(`/results/${searchInput}`) clear search input &*/
@@ -65,7 +67,7 @@ const Header = props => {
                       activeClassName="text-bold"
                       className="text-white px-md-1 px-lg-2"
                       to="#"
-                      onClick={logoutAction}
+                      onClick={e => logoutAction(e, dispatch)}
                     >
                       Log Out
                     </NavLink>
