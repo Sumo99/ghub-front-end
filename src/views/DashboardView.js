@@ -1,31 +1,32 @@
 import React, { useState } from "react";
-import { Consumer } from "../context/context";
 import Octicon, { ChevronRight } from "@githubprimer/octicons-react";
+import { Consumer } from "../context/context";
+import { search } from "../context/actions";
+import { SearchResultsList } from "../components/Dashboard";
 
 const DashboardView = () => {
-  const [search, setSearch] = useState("");
+  const [query, setQuery] = useState("");
 
   const handleInput = e => {
-    setSearch(e.target.value);
+    setQuery(e.target.value);
   };
 
-  const handleSubmit = (e, dispatch) => {
+  const handleSubmit = dispatch => e => {
     e.preventDefault();
-    dispatch({
-      type: "SEARCH"
-    });
-    setSearch("");
+    search(dispatch, query);
+    setQuery("");
   };
 
   return (
     <Consumer>
-      {({ dispatch }) => (
+      {({ dispatch, error, results }) => (
         <div className="d-flex flex-column container-lg flex-row flex-items-center flex-justify-center py-4 my-4">
+          {error && <div className="flash flash-error">{error}</div>}
           <h2 className="text-shadow-light f2-light d-block py-3">
             Search by GitHub Username
           </h2>
           <div className="Box box-shadow">
-            <form onSubmit={e => handleSubmit(e, dispatch)}>
+            <form onSubmit={handleSubmit(dispatch)}>
               <div className="Box-body">
                 <fieldset className="my-3 mx-3">
                   <label className="d-block mb-2" htmlFor="username">
@@ -40,7 +41,7 @@ const DashboardView = () => {
                     placeholder="GitHub Username"
                     aria-label="GitHub Username"
                     onChange={handleInput}
-                    value={search}
+                    value={query}
                   />
                 </fieldset>
               </div>
@@ -51,6 +52,7 @@ const DashboardView = () => {
               </div>
             </form>
           </div>
+          {results.length > 0 && <SearchResultsList results={results} />}
         </div>
       )}
     </Consumer>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import reducer from "./reducer";
 
-const Context = React.createContext();
+export const Context = React.createContext();
 
 export class Provider extends Component {
   state = {

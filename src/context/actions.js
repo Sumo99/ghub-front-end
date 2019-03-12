@@ -50,6 +50,27 @@ export const login = (dispatch, user) => {
     );
 };
 
+// Looks like the search endpoint does not require auth AFAICT
+export const search = (dispatch, query) => {
+  dispatch({ type: "SEARCH" });
+  return axios
+    .get(
+      `https://github-user-breakdown-backend.herokuapp.com/api/github/search/${query}`
+    )
+    .then(res => {
+      dispatch({
+        type: "SEARCH_SUCCESS",
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: "SEARCH_FAILURE",
+        payload: err.response.data.message
+      });
+    });
+};
+
 export const logout = dispatch => {
   dispatch({ type: "LOG_OUT" });
   localStorage.removeItem("userData");
