@@ -61,6 +61,7 @@ export default class LoginView extends Component {
             password: ""
           });
           this.props.history.push("/results");
+          localStorage.setItem("userToken", res.data.token);
         })
         .catch(err =>
           dispatch({
