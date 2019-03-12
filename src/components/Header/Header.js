@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import Octicon, { CircuitBoard } from "@githubprimer/octicons-react";
 import "./Header.scss";
 
 import { Consumer } from "../../context/context";
@@ -33,20 +34,24 @@ const Header = props => {
         const { authorized, dispatch } = value;
         return (
           <div className="bg-gray-dark" style={headerStyle}>
-            <div className="main-nav d-flex flex-justify-between px-3 pl-md-4 pr-md-4 py-3 box-shadow bg-gray-dark">
-              <div className="d-flex flex-justify-between flex-self-center flex-lg-auto mr-lg-2">
-                <div className="flex-self-center h3 text-white px-md-1 px-lg-2">
-                  GitHub User Breakdown
+            <div className="main-nav d-flex flex-justify-between flex-items-baseline px-3 pl-md-4 pr-md-4 py-3 box-shadow bg-gray-dark">
+              <div className="d-flex flex-justify-between flex-lg-auto mr-lg-2">
+                <div className="d-flex flex-justify-center flex-items-baseline">
+                  <Octicon
+                    icon={CircuitBoard}
+                    className="text-white flex-self-center"
+                    size="medium"
+                  />
+                  <p className="h3 text-white pt-2 px-2 px-md-1 px-lg-2">
+                    GitHub User Breakdown
+                  </p>
                 </div>
               </div>
               <div className="d-lg-flex flex-justify-end">
-                <nav
-                  className="flex-self-center flex-shrink-0 text-white"
-                  aria-label="Primary"
-                >
+                <nav className="flex-shrink-0 text-white" aria-label="Primary">
                   <NavLink
                     activeClassName="text-bold"
-                    className="text-white px-md-1 px-lg-2"
+                    className="text-white px-2 px-md-1 px-lg-2"
                     exact
                     to={authorized ? "/dashboard" : "#"}
                   >
@@ -55,7 +60,7 @@ const Header = props => {
                   {authorized ? (
                     <NavLink
                       activeClassName="text-bold"
-                      className="text-white px-md-1 px-lg-2"
+                      className="text-white px-2 px-md-1 px-lg-2"
                       to="#"
                       onClick={() => logoutAction(dispatch)}
                     >
@@ -64,7 +69,7 @@ const Header = props => {
                   ) : (
                     <NavLink
                       activeClassName="text-bold"
-                      className="text-white px-md-1 px-lg-2"
+                      className="text-white px-2 px-md-1 px-lg-2"
                       to="/login"
                     >
                       Log In
@@ -72,8 +77,8 @@ const Header = props => {
                   )}
                 </nav>
               </div>
-              {authorized && (
-                <div className="d-flex flex-self-auto flex-justify-end col-12 col-lg-2">
+              {authorized && window.innerWidth > 625 && (
+                <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3">
                   <div className="flex-self-center flex-auto col-12 ml-2 ml-lg-3">
                     <form
                       autoComplete="off"
@@ -84,7 +89,7 @@ const Header = props => {
                         type="text"
                         autoComplete="off"
                         placeholder="Search GitHub Users"
-                        className="form-control width-full f4 f-lg-5 search-dark"
+                        className="form-control f4 f-lg-5 search-dark"
                         value={searchInput}
                         onChange={e => updateSearchInput(e.target.value)}
                       />
