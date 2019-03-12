@@ -8,7 +8,9 @@ import {
 import "./App.scss";
 
 import { Provider } from "./context";
+import ProtectedRoute from "./auth/ProtectedRoute";
 import Header from "./components/Header/Header";
+import DashboardView from "./views/DashboardView";
 import LoginView from "./views/LoginView";
 import NotFound from "./views/NotFound";
 import SearchResult from "./views/SearchResult";
@@ -21,9 +23,13 @@ const App = () => {
           <Header />
           <div>
             <Switch>
-              {/* <Route exact path='/dashboard' component={} /> */}
+              <ProtectedRoute
+                exact
+                path="/dashboard"
+                component={DashboardView}
+              />
               <Route path="/login" component={LoginView} />
-              <Route path="/results/" component={SearchResult} />
+              <ProtectedRoute path="/results/" component={SearchResult} />
               <Redirect exact from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>
