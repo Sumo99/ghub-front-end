@@ -123,7 +123,7 @@ export default class LoginView extends Component {
                           id="username"
                           name="username"
                           type="text"
-                          placeholder="username"
+                          placeholder="Username"
                           aria-label="username"
                           onChange={this.handleInput}
                           value={this.state.username}
