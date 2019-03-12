@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
 
-import { Consumer } from "../context";
+import { Consumer } from "../context/context";
 import {LoginForm, RegisterForm } from "../components/Forms/Forms"
+import { register, login } from "../context/actions";
 
 export default class LoginView extends Component {
   state = {
@@ -24,50 +24,27 @@ export default class LoginView extends Component {
   handleSubmit = (e, dispatch) => {
     e.preventDefault();
     if (this.state.isNewRegistrant) {
-      dispatch({ type: "REGISTER" });
-      axios
-        .post(
-          "https://github-user-breakdown-backend.herokuapp.com/api/auth/register",
-          {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
-          }
-        )
-        .then(() => {
-          dispatch({ type: "REGISTER_SUCCESS" });
-          this.setState({
-            isNewRegistrant: false,
-            username: "",
-            password: "",
-            email: ""
-          });
-        })
-        .catch(err => dispatch({ type: "REGISTER_ERROR", payload: err }));
+      const userData = {
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email
+      };
+      register(dispatch, userData).then(() => {
+        this.setState({
+          isNewRegistrant: false,
+          username: "",
+          password: "",
+          email: ""
+        });
+      });
     } else {
-      dispatch({ type: "LOG_IN" });
-      axios
-        .post(
-          "https://github-user-breakdown-backend.herokuapp.com/api/auth/login",
-          {
-            username: this.state.username,
-            password: this.state.password
-          }
-        )
-        .then(res => {
-          dispatch({ type: "LOG_IN_SUCCESS", payload: res.data.token });
-          this.setState({
-            username: "",
-            password: ""
-          });
-          this.props.history.push("/results");
-        })
-        .catch(err =>
-          dispatch({
-            type: "LOG_IN_FAILURE",
-            payload: err.response.data.message
-          })
-        );
+      const userData = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      login(dispatch, userData).then(() => {
+        this.props.history.push("/dashboard");
+      });
     }
   };
 
@@ -82,7 +59,7 @@ export default class LoginView extends Component {
             </h2>
             <div className="Box col-11 col-sm-8 col-md-6 col-lg-3 box-shadow">
               {this.state.isNewRegistrant 
-                ? <LoginForm 
+                ? <RegisterForm
                     email={this.state.email}
                     username={this.state.username}
                     password={this.state.password}
@@ -90,15 +67,15 @@ export default class LoginView extends Component {
                     handleFormSwitch={this.handleFormSwitch}
                     handleSubmit={this.handleSubmit}
                     dispatch={dispatch}
-                  /> 
-                : <RegisterForm
-                  email={this.state.email}
-                  username={this.state.username}
-                  password={this.state.password}
-                  handleInput={this.handleInput}
-                  handleFormSwitch={this.handleFormSwitch}
-                  handleSubmit={this.handleSubmit}
-                  dispatch={dispatch}
+                />
+                : <LoginForm
+                    email={this.state.email}
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleInput={this.handleInput}
+                    handleFormSwitch={this.handleFormSwitch}
+                    handleSubmit={this.handleSubmit}
+                    dispatch={dispatch}
                 />}
             </div>
           </div>

@@ -1,7 +1,3 @@
-import React, { Component } from "react";
-
-const Context = React.createContext();
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER":
@@ -20,27 +16,29 @@ const reducer = (state, action) => {
       };
     case "LOG_IN":
       return {
-        ...state,
+        ...state
       };
-    case 'LOG_IN_SUCCESS':
+    case "LOG_IN_SUCCESS":
       return {
         ...state,
         authorized: true,
-        key: action.payload,
-        error: ''
-      }
-    case 'LOG_IN_FAILURE':
+        key: action.payload.token,
+        username: action.payload.username,
+        error: ""
+      };
+    case "LOG_IN_FAILURE":
       return {
         ...state,
         authorized: false,
         error: action.payload
-      }
+      };
     case "LOG_OUT":
       return {
         ...state,
         username: "",
         authorized: false,
-        error: ""
+        error: "",
+        key: ""
       };
     case "SEARCH":
       return {
@@ -69,27 +67,4 @@ const reducer = (state, action) => {
   }
 };
 
-export class Provider extends Component {
-  state = {
-    authorized: false,
-    results: [],
-    username: "",
-    error: "",
-    key: '',
-    dispatch: action => this.setState(state => reducer(state, action))
-  };
-
-  async componentDidMount() {
-    // check authorization
-  }
-
-  render() {
-    return (
-      <Context.Provider value={this.state}>
-        {this.props.children}
-      </Context.Provider>
-    );
-  }
-}
-
-export const Consumer = Context.Consumer;
+export default reducer;
