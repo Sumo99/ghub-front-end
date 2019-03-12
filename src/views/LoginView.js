@@ -20,12 +20,54 @@ export default class LoginView extends Component {
       isNewRegistrant: !prevState.isNewRegistrant
     }));
 
+  handleSubmit = (e, dispatch) => {
     e.preventDefault();
+    if (this.state.isNewRegistrant) {
+      dispatch({ type: "REGISTER" });
+      axios
+        .post(
+          "https://github-user-breakdown-backend.herokuapp.com/api/auth/register",
+          {
+            username: this.state.username,
+            email: this.state.email,
+            password: this.state.password
+          }
+        )
+        .then(() => {
+          dispatch({ type: "REGISTER_SUCCESS" });
+          this.setState({
+            isNewRegistrant: false,
+            username: "",
+            password: "",
+            email: ""
+          });
+        })
+        .catch(err => dispatch({ type: "REGISTER_ERROR", payload: err }));
+    } else {
+      dispatch({ type: "LOG_IN" });
+      axios
+        .post(
+          "https://github-user-breakdown-backend.herokuapp.com/api/auth/login",
+          {
+            username: this.state.username,
+            password: this.state.password
+          }
+        )
+        .then(res => {
+          dispatch({ type: "LOG_IN_SUCCESS", payload: res.data.token });
     this.setState({
       username: "",
       password: ""
     });
-    this.props.history.push("/");
+          this.props.history.push("/results");
+        })
+        .catch(err =>
+          dispatch({
+            type: "LOG_IN_FAILURE",
+            payload: err.response.data.message
+          })
+        );
+    }
   };
 
   render() {
