@@ -1,7 +1,3 @@
-import React, { Component } from "react";
-
-const Context = React.createContext();
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "REGISTER":
@@ -41,7 +37,8 @@ const reducer = (state, action) => {
         ...state,
         username: "",
         authorized: false,
-        error: ""
+        error: "",
+        key: ""
       };
     case "SEARCH":
       return {
@@ -70,34 +67,4 @@ const reducer = (state, action) => {
   }
 };
 
-export class Provider extends Component {
-  state = {
-    authorized: false,
-    results: [],
-    username: "",
-    error: "",
-    key: "",
-    dispatch: action => this.setState(state => reducer(state, action))
-  };
-
-  componentWillMount() {
-    let userData = localStorage.getItem("userData");
-    if (userData) {
-      userData = JSON.parse(userData);
-      this.setState({
-        authorized: true,
-        username: userData.username
-      });
-    }
-  }
-
-  render() {
-    return (
-      <Context.Provider value={this.state}>
-        {this.props.children}
-      </Context.Provider>
-    );
-  }
-}
-
-export const Consumer = Context.Consumer;
+export default reducer;

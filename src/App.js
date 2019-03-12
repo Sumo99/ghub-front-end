@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 
-import { Provider } from "./context";
+import { Provider } from "./context/context";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Header from "./components/Header/Header";
 import DashboardView from "./views/DashboardView";

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
-import { Consumer } from "../context";
+import { Consumer } from "../context/context";
+import { register, login } from "../context/actions";
 
 export default class LoginView extends Component {
   state = {
@@ -24,58 +25,27 @@ export default class LoginView extends Component {
   handleSubmit = (e, dispatch) => {
     e.preventDefault();
     if (this.state.isNewRegistrant) {
-      dispatch({ type: "REGISTER" });
-      axios
-        .post(
-          "https://github-user-breakdown-backend.herokuapp.com/api/auth/register",
-          {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
-          }
-        )
-        .then(() => {
-          dispatch({ type: "REGISTER_SUCCESS" });
-          this.setState({
-            isNewRegistrant: false,
-            username: "",
-            password: "",
-            email: ""
-          });
-        })
-        .catch(err => dispatch({ type: "REGISTER_ERROR", payload: err }));
+      const userData = {
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email
+      };
+      register(dispatch, userData).then(() => {
+        this.setState({
+          isNewRegistrant: false,
+          username: "",
+          password: "",
+          email: ""
+        });
+      });
     } else {
-      dispatch({ type: "LOG_IN" });
-      axios
-        .post(
-          "https://github-user-breakdown-backend.herokuapp.com/api/auth/login",
-          {
-            username: this.state.username,
-            password: this.state.password
-          }
-        )
-        .then(res => {
-          dispatch({
-            type: "LOG_IN_SUCCESS",
-            payload: {
-              token: res.data.token,
-              username: res.data.userData.username
-            }
-          });
-          const userData = {
-            userToken: res.data.token,
-            userID: res.data.userData.id,
-            username: res.data.userData.username
-          };
-          localStorage.setItem("userData", JSON.stringify(userData));
-          this.props.history.push("/dashboard");
-        })
-        .catch(err =>
-          dispatch({
-            type: "LOG_IN_FAILURE",
-            payload: err.response.data.message
-          })
-        );
+      const userData = {
+        username: this.state.username,
+        password: this.state.password
+      };
+      login(dispatch, userData).then(() => {
+        this.props.history.push("/dashboard");
+      });
     }
   };
 

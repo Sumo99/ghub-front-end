@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Header.scss";
 
-import { Consumer } from "../../context";
+import { Consumer } from "../../context/context";
+import { logout } from "../../context/actions";
 
 const headerStyle = {
   zIndex: "99",
@@ -15,11 +16,8 @@ const headerStyle = {
 const Header = props => {
   const [searchInput, updateSearchInput] = useState("");
 
-  const logoutAction = () => {
-    /*
-        logout dispatch here
-        .then history.push('/')
-        */
+  const logoutAction = dispatch => {
+    logout(dispatch);
   };
 
   const handleFormSubmit = (e, dispatch) => {
@@ -50,23 +48,16 @@ const Header = props => {
                     activeClassName="text-bold"
                     className="text-white px-md-1 px-lg-2"
                     exact
-                    to="/"
+                    to={authorized ? "/dashboard" : "#"}
                   >
                     Home
-                  </NavLink>
-                  <NavLink
-                    activeClassName="text-bold"
-                    className="text-white px-md-1 px-lg-2"
-                    to="/dashboard"
-                  >
-                    Search
                   </NavLink>
                   {authorized ? (
                     <NavLink
                       activeClassName="text-bold"
                       className="text-white px-md-1 px-lg-2"
                       to="#"
-                      onClick={e => logoutAction(e, dispatch)}
+                      onClick={() => logoutAction(dispatch)}
                     >
                       Log Out
                     </NavLink>

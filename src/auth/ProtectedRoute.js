@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-import { Consumer } from "../context";
+import { Consumer } from "../context/context";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Consumer>
