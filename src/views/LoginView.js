@@ -25,7 +25,9 @@ export default class LoginView extends Component {
           <h2 className="text-shadow-light f2-light d-block py-3">
             Sign in to GitHub User Breakdown
           </h2>
-          <div className="Box box-shadow" style={{ width: "20%" }}>
+          <div 
+            className="Box col-11 col-sm-8 col-md-6 col-lg-2 box-shadow"
+            style={{ minWidth: "20%" }}>
             <div className="Box-body">
               <form onSubmit={this.handleSubmit}>
                 <fieldset className="my-2">
