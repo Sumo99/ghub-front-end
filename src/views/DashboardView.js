@@ -2,26 +2,19 @@ import React, { useState } from "react";
 import { Consumer } from "../context";
 import Octicon, { ChevronRight } from "@githubprimer/octicons-react";
 
-const emptyForm = {
-  username: ""
-};
-
 const DashboardView = () => {
-  const [{ username }, setState] = useState(emptyForm);
+  const [search, setSearch] = useState("");
 
-  const handleInput = ({ target: { name, value } }) => {
-    setState({ [name]: value });
+  const handleInput = e => {
+    setSearch(e.target.value);
   };
 
-  const handleSubmit = dispatch => e => {
+  const handleSubmit = (e, dispatch) => {
     e.preventDefault();
     dispatch({
-      type: "SEARCH",
-      payload: {
-        username
-      }
+      type: "SEARCH"
     });
-    setState(emptyForm);
+    setSearch("");
   };
 
   return (
@@ -32,7 +25,7 @@ const DashboardView = () => {
             Search by GitHub Username
           </h2>
           <div className="Box box-shadow">
-            <form onSubmit={handleSubmit(dispatch)}>
+            <form onSubmit={e => handleSubmit(e, dispatch)}>
               <div className="Box-body">
                 <fieldset className="my-3 mx-3">
                   <label className="d-block mb-2" htmlFor="username">
@@ -47,7 +40,7 @@ const DashboardView = () => {
                     placeholder="GitHub Username"
                     aria-label="GitHub Username"
                     onChange={handleInput}
-                    value={username}
+                    value={search}
                   />
                 </fieldset>
               </div>
