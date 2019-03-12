@@ -15,7 +15,11 @@ export default class LoginView extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleFormSwitch = e =>
+    this.setState(prevState => ({
+      isNewRegistrant: !prevState.isNewRegistrant
+    }));
+
     e.preventDefault();
     this.setState({
       username: "",
