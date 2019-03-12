@@ -14,3 +14,9 @@
 .search-dark::placeholder {
   color: #fff;
 }
+
+@media (max-width: 625px) {
+  .search-form {
+    display: none !important;
+  }
+}

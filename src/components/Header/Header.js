@@ -35,7 +35,7 @@ const Header = props => {
         return (
           <div className="bg-gray-dark" style={headerStyle}>
             <div className="main-nav d-flex flex-justify-between flex-items-baseline px-3 pl-md-4 pr-md-4 py-3 box-shadow bg-gray-dark">
-              <div className="d-flex flex-justify-between flex-lg-auto mr-lg-2">
+              <div className="d-flex flex-justify-between flex-auto mr-lg-2">
                 <div className="d-flex flex-justify-center flex-items-baseline">
                   <Octicon
                     icon={CircuitBoard}
@@ -47,7 +47,7 @@ const Header = props => {
                   </p>
                 </div>
               </div>
-              <div className="d-lg-flex flex-justify-end">
+              <div className="d-flex flex-justify-end">
                 <nav className="flex-shrink-0 text-white" aria-label="Primary">
                   <NavLink
                     activeClassName="text-bold"
@@ -77,8 +77,8 @@ const Header = props => {
                   )}
                 </nav>
               </div>
-              {authorized && window.innerWidth > 625 && (
-                <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3">
+              {authorized && (
+                <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3 search-form">
                   <div className="flex-self-center flex-auto col-12 ml-2 ml-lg-3">
                     <form
                       autoComplete="off"
