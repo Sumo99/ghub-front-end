@@ -73,7 +73,7 @@ export const RegisterForm = props => (
           className="form-control width-full mb-2"
           id="email"
           name="email"
-          type="text"
+          type="email"
           placeholder="email"
           aria-label="email"
           onChange={props.handleInput}
