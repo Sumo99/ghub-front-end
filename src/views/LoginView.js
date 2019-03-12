@@ -62,13 +62,13 @@ export default class LoginView extends Component {
               username: res.data.userData.username
             }
           });
-          this.props.history.push("/results");
           const userData = {
             userToken: res.data.token,
             userID: res.data.userData.id,
             username: res.data.userData.username
           };
           localStorage.setItem("userData", JSON.stringify(userData));
+          this.props.history.push("/dashboard");
         })
         .catch(err =>
           dispatch({
