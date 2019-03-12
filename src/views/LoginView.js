@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import { Consumer } from "../context";
+import {LoginForm, RegisterForm } from "../components/Forms/Forms"
 
 export default class LoginView extends Component {
   state = {
@@ -80,82 +81,25 @@ export default class LoginView extends Component {
               Sign in to GitHub User Breakdown
             </h2>
             <div className="Box col-11 col-sm-8 col-md-6 col-lg-3 box-shadow">
-              <form onSubmit={e => this.handleSubmit(e, dispatch)}>
-                <div className="Box-body">
-                  {this.state.isNewRegistrant && (
-                    <fieldset className="my-2">
-                      <label className="d-block mb-2" htmlFor="email">
-                        Email
-                      </label>
-                      <input
-                        className="form-control width-full mb-2"
-                        id="email"
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                        aria-label="email"
-                        onChange={this.handleInput}
-                        value={this.state.email}
-                      />
-                    </fieldset>
-                  )}
-                  <fieldset className="my-2">
-                    <label className="d-block mb-2" htmlFor="username">
-                      Username
-                    </label>
-                    <input
-                      className="form-control width-full mb-2"
-                      id="username"
-                      name="username"
-                      type="text"
-                      placeholder="username"
-                      aria-label="username"
-                      onChange={this.handleInput}
-                      value={this.state.username}
-                    />
-                  </fieldset>
-                  <fieldset className="mb-2">
-                    <label className="d-block mb-2" htmlFor="password">
-                      Password
-                    </label>
-                    <input
-                      className="form-control width-full mb-2"
-                      id="password"
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                      aria-label="Password"
-                      onChange={this.handleInput}
-                      value={this.state.password}
-                    />
-                  </fieldset>
-                </div>
-                <div className="Box-footer d-flex flex-justify-between flex-items-center py-2">
-                  <button
-                    type="button"
-                    className="btn btn-small"
-                    onClick={this.handleFormSwitch}
-                  >
-                    Register
-                  </button>
-
-                  <div>
-                    <button
-                      type="button"
-                      className="btn btn-small btn-danger mx-1"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="btn btn-small btn-primary mx-1"
-                      type="submit"
-                      onClick={e => this.handleSubmit(e, dispatch)}
-                    >
-                      Sign In
-                    </button>
-                  </div>
-                </div>
-              </form>
+              {this.state.isNewRegistrant 
+                ? <LoginForm 
+                    email={this.state.email}
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleInput={this.handleInput}
+                    handleFormSwitch={this.handleFormSwitch}
+                    handleSubmit={this.handleSubmit}
+                    dispatch={dispatch}
+                  /> 
+                : <RegisterForm
+                  email={this.state.email}
+                  username={this.state.username}
+                  password={this.state.password}
+                  handleInput={this.handleInput}
+                  handleFormSwitch={this.handleFormSwitch}
+                  handleSubmit={this.handleSubmit}
+                  dispatch={dispatch}
+                />}
             </div>
           </div>
         )}
