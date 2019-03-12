@@ -26,7 +26,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         authorized: true,
-        key: action.payload,
+        key: action.payload.token,
+        username: action.payload.username,
         error: ""
       };
     case "LOG_IN_FAILURE":

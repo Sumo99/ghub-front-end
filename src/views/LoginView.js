@@ -55,13 +55,16 @@ export default class LoginView extends Component {
           }
         )
         .then(res => {
-          dispatch({ type: "LOG_IN_SUCCESS", payload: res.data.token });
-          this.setState({
-            username: "",
-            password: ""
+          dispatch({
+            type: "LOG_IN_SUCCESS",
+            payload: {
+              token: res.data.token,
+              username: res.data.userData.username
+            }
           });
           this.props.history.push("/results");
           localStorage.setItem("userToken", res.data.token);
+          localStorage.setItem("userID", res.data.userData.id);
         })
         .catch(err =>
           dispatch({
