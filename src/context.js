@@ -81,10 +81,12 @@ export class Provider extends Component {
   };
 
   componentDidMount() {
-    const token = localStorage.getItem("userToken");
-    if (token) {
+    let userData = localStorage.getItem("userData");
+    if (userData) {
+      userData = JSON.parse(userData);
       this.setState({
-        authorized: true
+        authorized: true,
+        username: userData.username
       });
     }
   }
