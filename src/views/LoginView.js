@@ -8,9 +8,7 @@ export default class LoginView extends Component {
     username: "",
     email: "",
     password: "",
-    isNewRegistrant: false,
-    error: null,
-    loading: false
+    isNewRegistrant: false
   };
 
   handleInput = e => {
@@ -28,13 +26,16 @@ export default class LoginView extends Component {
 
   render() {
     return (
+      <Consumer>
+        {({ dispatch, error }) => (
       <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-4 my-4">
+            {error ? <div className="flash flash-error">{error}</div> : null}
         <h2 className="text-shadow-light f2-light d-block py-3">
           Sign in to GitHub User Breakdown
         </h2>
         <div className="Box col-11 col-sm-8 col-md-6 col-lg-3 box-shadow">
+              <form onSubmit={e => this.handleSubmit(e, dispatch)}>
           <div className="Box-body">
-            <form onSubmit={this.handleSubmit}>
               {this.state.isNewRegistrant && (
                 <fieldset className="my-2">
                   <label className="d-block mb-2" htmlFor="email">
@@ -82,23 +83,37 @@ export default class LoginView extends Component {
                   value={this.state.password}
                 />
               </fieldset>
-            </form>
           </div>
           <div className="Box-footer d-flex flex-justify-between flex-items-center py-2">
-            <button className="btn btn-small">Register</button>
+                  <button
+                    type="button"
+                    className="btn btn-small"
+                    onClick={this.handleFormSwitch}
+                  >
+                    Register
+                  </button>
+
             <div>
-              <button className="btn btn-small btn-danger mx-1">Cancel</button>
+                    <button
+                      type="button"
+                      className="btn btn-small btn-danger mx-1"
+                    >
+                      Cancel
+                    </button>
               <button
                 className="btn btn-small btn-primary mx-1"
                 type="submit"
-                onClick={this.handleSubmit}
+                      onClick={e => this.handleSubmit(e, dispatch)}
               >
                 Sign In
               </button>
             </div>
           </div>
+              </form>
         </div>
       </div>
+        )}
+      </Consumer>
     );
   }
 }
