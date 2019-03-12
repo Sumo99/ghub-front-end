@@ -80,7 +80,7 @@ export class Provider extends Component {
     dispatch: action => this.setState(state => reducer(state, action))
   };
 
-  componentDidMount() {
+  componentWillMount() {
     let userData = localStorage.getItem("userData");
     if (userData) {
       userData = JSON.parse(userData);
