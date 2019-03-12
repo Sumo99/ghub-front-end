@@ -12,10 +12,6 @@ import Header from "./components/Header/Header";
 import LoginView from "./views/LoginView";
 import NotFound from "./views/NotFound";
 import SearchResult from "./views/SearchResult";
-<<<<<<< HEAD
-import DashboardView from "./views/DashboardView";
-=======
->>>>>>> develop
 
 const App = () => {
   return (
@@ -24,9 +20,6 @@ const App = () => {
         <div className="App">
           <Header />
           <div>
-<<<<<<< HEAD
-            <DashboardView />
-=======
             <Switch>
               {/* <Route exact path='/dashboard' component={} /> */}
               <Route path="/login" component={LoginView} />
@@ -34,7 +27,6 @@ const App = () => {
               <Redirect from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>
->>>>>>> develop
           </div>
         </div>
       </Router>
