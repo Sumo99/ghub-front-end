@@ -20,21 +20,21 @@ const reducer = (state, action) => {
       };
     case "LOG_IN":
       return {
-        ...state,
+        ...state
       };
-    case 'LOG_IN_SUCCESS':
+    case "LOG_IN_SUCCESS":
       return {
         ...state,
         authorized: true,
         key: action.payload,
-        error: ''
-      }
-    case 'LOG_IN_FAILURE':
+        error: ""
+      };
+    case "LOG_IN_FAILURE":
       return {
         ...state,
         authorized: false,
         error: action.payload
-      }
+      };
     case "LOG_OUT":
       return {
         ...state,
@@ -75,12 +75,17 @@ export class Provider extends Component {
     results: [],
     username: "",
     error: "",
-    key: '',
+    key: "",
     dispatch: action => this.setState(state => reducer(state, action))
   };
 
-  async componentDidMount() {
-    // check authorization
+  componentDidMount() {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      this.setState({
+        authorized: true
+      });
+    }
   }
 
   render() {
