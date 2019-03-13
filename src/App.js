@@ -6,8 +6,8 @@ import {
   Redirect
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.scss";
 
 import { Provider } from "./context/context";
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -38,6 +38,8 @@ const App = () => {
             <ToastContainer
               autoClose={2000}
               position="top-center"
+              hideProgressBar
+              closeButton={false}
             />
           </div>
         </div>
