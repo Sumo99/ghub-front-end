@@ -12,7 +12,7 @@ export const LoginForm = props => (
           id="username"
           name="username"
           type="text"
-          placeholder="username"
+          placeholder="Username"
           aria-label="username"
           onChange={props.handleInput}
           value={props.username}
@@ -89,7 +89,7 @@ export const RegisterForm = props => (
           id="username"
           name="username"
           type="text"
-          placeholder="username"
+          placeholder="Username"
           aria-label="username"
           onChange={props.handleInput}
           value={props.username}
