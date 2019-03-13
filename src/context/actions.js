@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 export const register = (dispatch, user) => {
   dispatch({ type: "REGISTER" });
@@ -14,13 +15,15 @@ export const register = (dispatch, user) => {
       )
       .then(() => {
         dispatch({ type: "REGISTER_SUCCESS" });
+        toast.success('Thanks for registering!')
         resolve();
       })
       .catch(() => {
         dispatch({
           type: "REGISTER_FAILURE",
-          payload: "This user or email already exists"
+          payload: "This username or email already exists"
         });
+        toast.error('This username or email already exists')
         reject();
       });
   });
@@ -50,13 +53,15 @@ export const login = (dispatch, user) => {
         username: res.data.userData.username
       };
       localStorage.setItem("userData", JSON.stringify(userData));
+      toast.success(res.data.message);
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
         type: "LOG_IN_FAILURE",
         payload: err.response.data.message
       })
-    );
+      toast.error(err.response.data.message)
+    });
 };
 
 // Looks like the search endpoint does not require auth AFAICT
@@ -77,10 +82,12 @@ export const search = (dispatch, query) => {
         type: "SEARCH_FAILURE",
         payload: err.response.data.message
       });
+      toast.error(err.response.data.message)
     });
 };
 
 export const logout = dispatch => {
   dispatch({ type: "LOG_OUT" });
   localStorage.removeItem("userData");
+  toast.info('Goodbye for now!')
 };

@@ -35,7 +35,10 @@ const App = () => {
               <Redirect exact from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>
-            <ToastContainer autoClose={2000} />
+            <ToastContainer
+              autoClose={2000}
+              position="top-center"
+            />
           </div>
         </div>
       </Router>

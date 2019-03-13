@@ -51,9 +51,8 @@ export default class LoginView extends Component {
   render() {
     return (
       <Consumer>
-        {({ dispatch, error }) => (
+        {({ dispatch }) => (
           <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-4 my-4">
-            {error ? <div className="flash flash-error">{error}</div> : null}
             <h2 className="text-shadow-light f2-light d-block py-3">
               Sign in to GitHub User Breakdown
             </h2>

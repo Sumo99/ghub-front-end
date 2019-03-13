@@ -19,9 +19,8 @@ const DashboardView = () => {
 
   return (
     <Consumer>
-      {({ dispatch, error, results }) => (
+      {({ dispatch, results }) => (
         <div className="d-flex flex-column container-lg flex-row flex-items-center flex-justify-center py-4 my-4">
-          {error && <div className="flash flash-error">{error}</div>}
           <h2 className="text-shadow-light f2-light d-block py-3">
             Search by GitHub Username
           </h2>
