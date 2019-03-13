@@ -1,6 +1,6 @@
 import parseHour from "./parseHour";
 
-const DAYS_OF_WEEK = [
+export const DAYS_OF_WEEK = [
   "Sunday",
   "Monday",
   "Tuesday",
