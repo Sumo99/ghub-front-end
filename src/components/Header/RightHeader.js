@@ -13,6 +13,9 @@ const RightHeader = props => {
   );
 };
 
-RightHeader.propTypes = {};
+RightHeader.propTypes = {
+  authorized: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
 
 export default RightHeader;

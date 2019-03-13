@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+import { search } from "../../context/actions";
+
 const Search = props => {
-  const [searchInput, updateSearchInput] = useState("");
+  const [query, setQuery] = useState("");
 
   const handleFormSubmit = (e, dispatch) => {
     e.preventDefault();
-    /*
-            search dispatch here
-          &.then  history.push(`/results/${searchInput}`) clear search input &*/
+    search(dispatch, query);
   };
   return (
     <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3 search-form">
@@ -23,8 +23,8 @@ const Search = props => {
             autoComplete="off"
             placeholder="Search GitHub Users"
             className="form-control f4 f-lg-5 search-dark"
-            value={searchInput}
-            onChange={e => updateSearchInput(e.target.value)}
+            value={query}
+            onChange={e => setQuery(e.target.value)}
           />
         </form>
       </div>
@@ -32,6 +32,8 @@ const Search = props => {
   );
 };
 
-Search.propTypes = {};
+Search.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 
 export default Search;

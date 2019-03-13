@@ -5,21 +5,12 @@ import { Consumer } from "../../context/context";
 import LeftHeader from "./LeftHeader";
 import RightHeader from "./RightHeader";
 
-const headerStyle = {
-  zIndex: "99",
-  position: "sticky",
-  top: "0",
-  left: "0",
-  right: "0"
-};
-
-const Header = props => {
+const Header = () => {
   return (
     <Consumer>
-      {value => {
-        const { authorized, dispatch } = value;
+      {({ authorized, dispatch }) => {
         return (
-          <div className="bg-gray-dark" style={headerStyle}>
+          <div className="bg-gray-dark header-style">
             <div className="main-nav d-flex flex-justify-between flex-items-baseline px-3 pl-md-4 pr-md-4 py-3 box-shadow bg-gray-dark">
               <LeftHeader />
               <RightHeader authorized={authorized} dispatch={dispatch} />

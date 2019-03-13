@@ -43,6 +43,9 @@ const Nav = props => {
   );
 };
 
-Nav.propTypes = {};
+Nav.propTypes = {
+  authorized: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
 
 export default Nav;
