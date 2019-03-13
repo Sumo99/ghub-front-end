@@ -5,7 +5,9 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Provider } from "./context/context";
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -33,6 +35,7 @@ const App = () => {
               <Redirect exact from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>
+            <ToastContainer autoClose={2000} />
           </div>
         </div>
       </Router>
