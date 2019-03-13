@@ -52,7 +52,7 @@ export default class LoginView extends Component {
     return (
       <Consumer>
         {({ dispatch }) => (
-          <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-4 my-4">
+          <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-6">
             <h2 className="text-shadow-light f2-light d-block py-3">
               Sign in to GitHub User Breakdown
             </h2>

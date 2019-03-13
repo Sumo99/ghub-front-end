@@ -7,6 +7,7 @@ export const Context = React.createContext();
 export class Provider extends Component {
   state = {
     authorized: false,
+    loading: false,
     results: [],
     username: "",
     error: "",
