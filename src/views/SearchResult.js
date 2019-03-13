@@ -1,6 +1,10 @@
 import React from "react";
 
-import { ProfileHeader, LanguageChart } from "../components/SearchResults";
+import {
+  ProfileHeader,
+  LanguageChart,
+  BeeSwarmChart
+} from "../components/SearchResults";
 
 // Mock data
 const _data = {
@@ -40,7 +44,7 @@ const SearchResults = ({ data = _data }) => (
     <ProfileHeader user={data.user} />
     <div className="container-lg d-flex flex-wrap flex-justify-around">
       <LanguageChart languages={data.languages} />
-      <LanguageChart languages={data.languages} />
+      <BeeSwarmChart commitsByHour={undefined} />
     </div>
   </>
 );
