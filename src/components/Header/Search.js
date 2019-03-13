@@ -9,7 +9,6 @@ const Search = props => {
   const handleFormSubmit = (e, dispatch) => {
     e.preventDefault();
     search(dispatch, query);
-    console.log("fired");
   };
   return (
     <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3 search-form">
