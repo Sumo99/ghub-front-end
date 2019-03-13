@@ -2,19 +2,28 @@ import axios from "axios";
 
 export const register = (dispatch, user) => {
   dispatch({ type: "REGISTER" });
-  return axios
-    .post(
-      "https://github-user-breakdown-backend.herokuapp.com/api/auth/register",
-      {
-        username: user.username,
-        email: user.email,
-        password: user.password
-      }
-    )
-    .then(() => {
-      dispatch({ type: "REGISTER_SUCCESS" });
-    })
-    .catch(err => dispatch({ type: "REGISTER_ERROR", payload: err }));
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        "https://github-user-breakdown-backend.herokuapp.com/api/auth/register",
+        {
+          username: user.username,
+          email: user.email,
+          password: user.password
+        }
+      )
+      .then(() => {
+        dispatch({ type: "REGISTER_SUCCESS" });
+        resolve();
+      })
+      .catch(() => {
+        dispatch({
+          type: "REGISTER_FAILURE",
+          payload: "This user or email already exists"
+        });
+        reject();
+      });
+  });
 };
 
 export const login = (dispatch, user) => {

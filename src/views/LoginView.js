@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { Consumer } from "../context/context";
-import {LoginForm, RegisterForm } from "../components/Forms/Forms"
+import { LoginForm, RegisterForm } from "../components/Forms/Forms";
 import { register, login } from "../context/actions";
 
 export default class LoginView extends Component {
@@ -58,25 +58,27 @@ export default class LoginView extends Component {
               Sign in to GitHub User Breakdown
             </h2>
             <div className="Box col-11 col-sm-8 col-md-6 col-lg-3 box-shadow">
-              {this.state.isNewRegistrant 
-                ? <RegisterForm
-                    email={this.state.email}
-                    username={this.state.username}
-                    password={this.state.password}
-                    handleInput={this.handleInput}
-                    handleFormSwitch={this.handleFormSwitch}
-                    handleSubmit={this.handleSubmit}
-                    dispatch={dispatch}
+              {this.state.isNewRegistrant ? (
+                <RegisterForm
+                  email={this.state.email}
+                  username={this.state.username}
+                  password={this.state.password}
+                  handleInput={this.handleInput}
+                  handleFormSwitch={this.handleFormSwitch}
+                  handleSubmit={this.handleSubmit}
+                  dispatch={dispatch}
                 />
-                : <LoginForm
-                    email={this.state.email}
-                    username={this.state.username}
-                    password={this.state.password}
-                    handleInput={this.handleInput}
-                    handleFormSwitch={this.handleFormSwitch}
-                    handleSubmit={this.handleSubmit}
-                    dispatch={dispatch}
-                />}
+              ) : (
+                <LoginForm
+                  email={this.state.email}
+                  username={this.state.username}
+                  password={this.state.password}
+                  handleInput={this.handleInput}
+                  handleFormSwitch={this.handleFormSwitch}
+                  handleSubmit={this.handleSubmit}
+                  dispatch={dispatch}
+                />
+              )}
             </div>
           </div>
         )}
