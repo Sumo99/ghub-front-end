@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const SearchResultsList = ({ results }) => (
-  <div className=" mt-4 d-flex flex-column flex-md-row flex-wrap">
+  <div className="mt-4 d-flex flex-column flex-sm-row flex-wrap flex-justify-center">
     {results.map(({ username, avatar }) => (
-      <Link to={`/results/${username}`} className="mx-1 my-3" key={username}>
+      <Link to={`/results/${username}`} className="no-underline" key={username}>
         <div
-          className="Box d-flex flex-justify-start flex-items-between"
+          className="Box d-flex flex-justify-start flex-items-center box-shadow-medium px-1 pt-2 pb-3 m-2 position-relative rounded-1 overflow-hidden"
           style={{ minWidth: "200px" }}
         >
           <img
@@ -17,7 +17,8 @@ const SearchResultsList = ({ results }) => (
             width="72"
             height="72"
           />
-          <strong className="ml-3 mb-2">{username}</strong>
+          <h4 className="alt-h4 ml-2">{username}</h4>
+          <div class="bg-blue position-absolute bottom-0 left-0 py-1 width-full" />
         </div>
       </Link>
     ))}

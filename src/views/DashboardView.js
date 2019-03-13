@@ -20,11 +20,11 @@ const DashboardView = () => {
   return (
     <Consumer>
       {({ dispatch, results }) => (
-        <div className="d-flex flex-column container-lg flex-row flex-items-center flex-justify-center py-6">
-          <h2 className="text-shadow-light f2-light d-block py-3">
+        <div className="container-lg d-flex flex-column flex-justify-center flex-items-center">
+          <h2 className="text-center text-shadow-light f2-light d-block py-3">
             Search by GitHub Username
           </h2>
-          <div className="Box box-shadow">
+          <div className="Box box-shadow col-lg-6">
             <form onSubmit={handleSubmit(dispatch)}>
               <div className="Box-body">
                 <fieldset className="my-3 mx-3">
@@ -34,7 +34,6 @@ const DashboardView = () => {
                   <input
                     className="form-control width-full mb-2 input-lg"
                     id="username"
-                    style={{ minWidth: "30ch" }}
                     name="username"
                     type="text"
                     placeholder="GitHub Username"
