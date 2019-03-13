@@ -7,7 +7,7 @@ const SearchResultsList = ({ results }) => (
     {results.map(({ username, avatar }) => (
       <Link to={`/results/${username}`} className="no-underline" key={username}>
         <div
-          className="Box d-flex flex-justify-start flex-items-center box-shadow-medium px-1 pt-2 pb-3 m-2 position-relative rounded-1 overflow-hidden"
+          className="Box d-flex flex-justify-start flex-items-center box-shadow-medium px-1 pt-2 pb-3 m-2 position-relative rounded-1 overflow-hidden hover-grow"
           style={{ minWidth: "200px" }}
         >
           <img
