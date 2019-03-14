@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
 import { Consumer } from "../context/context";
 import { LoginForm, RegisterForm } from "../components/Forms/Forms";
@@ -51,36 +52,40 @@ export default class LoginView extends Component {
   render() {
     return (
       <Consumer>
-        {({ dispatch }) => (
-          <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-6">
-            <h2 className="text-shadow-light f2-light d-block py-3">
-              Sign in to GitHub User Breakdown
-            </h2>
-            <div className="Box col-11 col-sm-8 col-md-6 col-lg-4 col-xl-3 box-shadow">
-              {this.state.isNewRegistrant ? (
-                <RegisterForm
-                  email={this.state.email}
-                  username={this.state.username}
-                  password={this.state.password}
-                  handleInput={this.handleInput}
-                  handleFormSwitch={this.handleFormSwitch}
-                  handleSubmit={this.handleSubmit}
-                  dispatch={dispatch}
-                />
-              ) : (
-                <LoginForm
-                  email={this.state.email}
-                  username={this.state.username}
-                  password={this.state.password}
-                  handleInput={this.handleInput}
-                  handleFormSwitch={this.handleFormSwitch}
-                  handleSubmit={this.handleSubmit}
-                  dispatch={dispatch}
-                />
-              )}
+        {({ dispatch, authorized }) =>
+          authorized ? (
+            <Redirect to="/dashboard" />
+          ) : (
+            <div className="d-flex flex-column flex-row flex-items-center flex-justify-center py-6">
+              <h2 className="text-shadow-light f2-light d-block py-3">
+                Sign in to GitHub User Breakdown
+              </h2>
+              <div className="Box col-11 col-sm-8 col-md-6 col-lg-4 col-xl-3 box-shadow">
+                {this.state.isNewRegistrant ? (
+                  <RegisterForm
+                    email={this.state.email}
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleInput={this.handleInput}
+                    handleFormSwitch={this.handleFormSwitch}
+                    handleSubmit={this.handleSubmit}
+                    dispatch={dispatch}
+                  />
+                ) : (
+                  <LoginForm
+                    email={this.state.email}
+                    username={this.state.username}
+                    password={this.state.password}
+                    handleInput={this.handleInput}
+                    handleFormSwitch={this.handleFormSwitch}
+                    handleSubmit={this.handleSubmit}
+                    dispatch={dispatch}
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )
+        }
       </Consumer>
     );
   }

@@ -16,7 +16,11 @@ const Nav = props => {
           activeClassName="text-bold"
           className="text-white px-2 px-md-1 px-lg-2"
           exact
-          to={props.authorized ? "/dashboard" : "#"}
+          to={
+            props.authorized
+              ? "/dashboard"
+              : "https://distracted-hoover-00aed4.netlify.com/"
+          }
         >
           Home
         </NavLink>

@@ -4,7 +4,7 @@ import {
   area,
   axisBottom,
   axisLeft,
-  curveStep,
+  curveBasis,
   line,
   max,
   mean,
@@ -66,7 +66,7 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
     dayValue: dayValues[ix]
   }));
 
-  const curve = curveStep;
+  const curve = curveBasis;
 
   useEffect(() => {
     const svg = select(ref.current).datum(data);
@@ -157,7 +157,7 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
   );
 };
 
-const MultiLineChart = ({ commitsByHour, isLoading, error }) => {
+const MultiLineChart = ({ commitsByHour }) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case "SHOW_AVERAGE":
@@ -204,14 +204,7 @@ const MultiLineChart = ({ commitsByHour, isLoading, error }) => {
     });
   };
 
-  return isLoading ? (
-    <h3>Loading</h3>
-  ) : error ? (
-    <>
-      <h3>Error</h3>
-      <p>{error}</p>
-    </>
-  ) : (
+  return (
     <section className="Box col-md-10 px-4 mt-4">
       <h2 className="Subhead py-3">Daily commits per hour</h2>
       <div className="d-flex mb-3">

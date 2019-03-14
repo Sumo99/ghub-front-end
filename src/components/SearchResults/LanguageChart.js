@@ -3,34 +3,49 @@ import PropTypes from "prop-types";
 import sumBy from "lodash/fp/sumBy";
 import sortBy from "lodash/fp/sortBy";
 import { format } from "d3";
+import Octicon, { Alert } from "@githubprimer/octicons-react";
+import { toast } from "react-toastify";
 
-const LanguageChart = ({ languages }) => {
+import LoadingWheel from "../Loading/LoadingWheel";
+
+const LanguageChart = ({ languages, isLoading, error }) => {
   const sizeTotal = sumBy("size", languages);
-  return (
-    <section className="Box col-md-5 px-4 mt-4">
-      <h2 className="py-3 Subhead">Language usage</h2>
-      <dl className="mt-2 list-style-none">
-        {sortBy("size", languages)
-          .reverse()
-          .map(({ name, color, size }) => (
-            <React.Fragment key={name}>
-              <dt className="pt-2">
-                <strong>{name}</strong> {format(".1%")(size / sizeTotal)}
-              </dt>
-              <dd>
-                <div
-                  style={{
-                    height: "1rem",
-                    backgroundColor: color,
-                    width: format(".1%")(size / sizeTotal)
-                  }}
-                />
-              </dd>
-            </React.Fragment>
-          ))}
-      </dl>
-    </section>
-  );
+  if (isLoading) {
+    return <LoadingWheel text="language usage information." />;
+  } else if (error) {
+    toast.error(error);
+    return (
+      <div className="d-flex flex-column flex-justify-center flex-items-center">
+        <Octicon icon={Alert} size="large" />
+        <span>Something went wrong.</span>
+      </div>
+    );
+  } else
+    return (
+      <section className="col-12 col-lg-6 px-4">
+        <h2 className="Subhead">Language Usage</h2>
+        <dl className="mt-2 list-style-none">
+          {sortBy("size", languages)
+            .reverse()
+            .map(({ name, color, size }) => (
+              <React.Fragment key={name}>
+                <dt className="pt-2">
+                  <strong>{name}</strong> {format(".1%")(size / sizeTotal)}
+                </dt>
+                <dd>
+                  <div
+                    style={{
+                      height: "1rem",
+                      backgroundColor: color,
+                      width: format(".1%")(size / sizeTotal)
+                    }}
+                  />
+                </dd>
+              </React.Fragment>
+            ))}
+        </dl>
+      </section>
+    );
 };
 
 export const LanguageChartProps = PropTypes.shape({
