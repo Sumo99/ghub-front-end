@@ -69,13 +69,13 @@ const ProfileHeader = ({ user, isLoading, error }) => {
           </h4>
           <h4 className="mt-2 Subhead">
             <Octicon icon={Link} size="small" />
-            <a
-              className="text-gray ml-3 f5"
-              target="_blank"
-              href={user.blog || "#"}
-            >
-              {user.blog || "Unavailable"}
-            </a>
+            {user.blog ? (
+              <a className="text-gray ml-3 f5" target="_blank" href={user.blog}>
+                {user.blog}
+              </a>
+            ) : (
+              <span className="text-gray ml-3 f5">Unavailable</span>
+            )}
           </h4>
         </div>
       </header>
