@@ -34,7 +34,10 @@ const App = () => {
                 component={DashboardView}
               />
               <Route path="/login" component={LoginView} />
-              <ProtectedRoute path="/results/" component={SearchResult} />
+              <ProtectedRoute
+                path="/results/:username"
+                component={SearchResult}
+              />
               <Redirect exact from="/" to="/login" />
               <Route component={NotFound} />
             </Switch>

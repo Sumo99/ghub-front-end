@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export const register = (dispatch, user) => {
   dispatch({ type: "REGISTER" });
@@ -15,7 +15,7 @@ export const register = (dispatch, user) => {
       )
       .then(() => {
         dispatch({ type: "REGISTER_SUCCESS" });
-        toast.success('Thanks for registering!')
+        toast.success("Thanks for registering!");
         resolve();
       })
       .catch(() => {
@@ -23,7 +23,7 @@ export const register = (dispatch, user) => {
           type: "REGISTER_FAILURE",
           payload: "This username or email already exists"
         });
-        toast.error('This username or email already exists')
+        toast.error("This username or email already exists");
         reject();
       });
   });
@@ -59,8 +59,8 @@ export const login = (dispatch, user) => {
       dispatch({
         type: "LOG_IN_FAILURE",
         payload: err.response.data.message
-      })
-      toast.error(err.response.data.message)
+      });
+      toast.error(err.response.data.message);
     });
 };
 
@@ -68,13 +68,18 @@ export const login = (dispatch, user) => {
 export const search = (dispatch, query) => {
   dispatch({ type: "SEARCH" });
   return axios
-    .get(
-      `https://github-user-breakdown-backend.herokuapp.com/api/github/search/${query}`
-    )
+    .get(`https://api.github.com/search/users?q=${query}`)
     .then(res => {
+      let results;
+      if (res.data.total_count > 0) {
+        results = res.data.items.slice(0, 10).map(item => ({
+          avatar: item.avatar_url,
+          username: item.login
+        }));
+      }
       dispatch({
         type: "SEARCH_SUCCESS",
-        payload: res.data
+        payload: results || []
       });
     })
     .catch(err => {
@@ -82,12 +87,12 @@ export const search = (dispatch, query) => {
         type: "SEARCH_FAILURE",
         payload: err.response.data.message
       });
-      toast.error(err.response.data.message)
+      toast.error(err.response.data.message);
     });
 };
 
 export const logout = dispatch => {
   dispatch({ type: "LOG_OUT" });
   localStorage.removeItem("userData");
-  toast.info('Goodbye for now!')
+  toast.info("Goodbye for now!");
 };
