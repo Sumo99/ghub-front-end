@@ -20,10 +20,7 @@ import { formatHour, DAYS_OF_WEEK } from "../../lib";
 
 import "./MultiLineChart.scss";
 
-/*
- * 
- */
-
+// @TODO Add key
 const DiffChart = ({ avgData, dayValues, maxY }) => {
   const ref = useRef();
 
@@ -60,7 +57,10 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
   const yAxis = g =>
     g.attr("transform", `translate(${margin.left}, 0)`).call(axisLeft(y));
 
-  const colors = ["#d73a4966", "#28a74566"];
+  const LT_RED = "#ffdce0";
+  const LT_BLUE = "#dbedff";
+
+  const colors = [LT_RED, LT_BLUE];
 
   const data = avgData.map((a, ix) => ({
     ...a,

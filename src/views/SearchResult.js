@@ -7,6 +7,8 @@ import {
   MultiLineChart
 } from "../components/SearchResults";
 
+import "./SearchResult.scss";
+
 // Mock data
 const _data = {
   user: {
