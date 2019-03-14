@@ -17,11 +17,11 @@ const ProfileHeader = ({ user, isLoading, error }) => {
   if (isLoading) {
     return <LoadingWheel text="profile information." />;
   } else if (error) {
+    toast.error(error);
     return (
       <div className="d-flex flex-column flex-justify-center flex-items-center">
         <Octicon icon={Alert} size="large" />
         <span>Something went wrong.</span>
-        {toast.error(error)}
       </div>
     );
   } else

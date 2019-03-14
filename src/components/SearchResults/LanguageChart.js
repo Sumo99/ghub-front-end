@@ -13,11 +13,11 @@ const LanguageChart = ({ languages, isLoading, error }) => {
   if (isLoading) {
     return <LoadingWheel text="language usage information." />;
   } else if (error) {
+    toast.error(error);
     return (
       <div className="d-flex flex-column flex-justify-center flex-items-center">
         <Octicon icon={Alert} size="large" />
         <span>Something went wrong.</span>
-        {toast.error(error)}
       </div>
     );
   } else
