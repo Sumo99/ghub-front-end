@@ -76,11 +76,11 @@ const ProfileHeader = ({ user, isLoading, error }) => {
 
 export const ProfileHeaderProps = {
   user: PropTypes.shape({
-    avatarUrl: PropTypes.string.isRequired,
+    avatar_url: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     login: PropTypes.string.isRequired
-  }).isRequired
+  })
 };
 
 ProfileHeader.propTypes = ProfileHeaderProps;

@@ -28,17 +28,17 @@ const LANG_COLOR_DICT = {
 const initialState = {
   user: {
     data: null,
-    isLoading: false,
+    isLoading: true,
     error: null
   },
   languages: {
     data: null,
-    isLoading: false,
+    isLoading: true,
     error: null
   },
   punchcards: {
     data: null,
-    isLoading: false,
+    isLoading: true,
     error: null
   }
 };
