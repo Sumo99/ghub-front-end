@@ -3,7 +3,8 @@ import React from "react";
 import {
   ProfileHeader,
   LanguageChart,
-  BeeSwarmChart
+  BeeSwarmChart,
+  MultiLineChart
 } from "../components/SearchResults";
 
 // Mock data
@@ -42,9 +43,10 @@ const _data = {
 const SearchResults = ({ data = _data }) => (
   <>
     <ProfileHeader user={data.user} />
-    <div className="container-lg d-flex flex-wrap flex-justify-around">
+    <div className="container-lg d-flex flex-wrap flex-justify-around mb-4">
       <LanguageChart languages={data.languages} />
       <BeeSwarmChart commitsByHour={undefined} />
+      <MultiLineChart commitsByHour={undefined} />
     </div>
   </>
 );
