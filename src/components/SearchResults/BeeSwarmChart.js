@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { axisBottom, extent, select, scaleLinear, scaleBand } from "d3";
 import { dodge, parseWeekHour, DAYS_OF_WEEK } from "../../lib";
 
-const BeeSwarmChart = ({ commitsByHour, isLoading, error }) => {
+const BeeSwarmChart = ({ commitsByHour }) => {
   const ref = useRef();
   const [width, height] = [800, 360];
   const margin = {
@@ -56,14 +56,7 @@ const BeeSwarmChart = ({ commitsByHour, isLoading, error }) => {
       .attr("r", radius);
   }, []);
 
-  return isLoading ? (
-    <h3>Loading</h3>
-  ) : error ? (
-    <>
-      <h3>Error</h3>
-      <p>{error}</p>
-    </>
-  ) : (
+  return (
     <section className="Box col-md-10 px-4 mt-4">
       <h2 className="py-3 Subhead">Total commits by week-hour</h2>
       <div className="mt-2">

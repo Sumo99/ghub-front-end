@@ -1,5 +1,9 @@
 import React, { useEffect, useReducer } from "react";
 
+import { toast } from "react-toastify";
+import LoadingWheel from "../components/Loading/LoadingWheel";
+import Axios from "axios";
+
 import { DAYS_OF_WEEK, formatHour } from "../lib";
 import {
   ProfileHeader,
@@ -9,7 +13,6 @@ import {
 } from "../components/SearchResults";
 
 import "./SearchResult.scss";
-import Axios from "axios";
 
 const GH_USER_API = username => `https://api.github.com/users/${username}`;
 const LANGUAGES_API = username =>
@@ -46,10 +49,10 @@ const initialState = {
 const parsers = {
   user: x => x,
   languages: dict =>
-    Object.entries(dict).map(([language, size]) => ({
-      language,
+    Object.entries(dict).map(([name, size]) => ({
+      name,
       size,
-      color: LANG_COLOR_DICT[language] || "black"
+      color: LANG_COLOR_DICT[name] || "black"
     })),
   punchcards: obj =>
     Object.values(obj).map(({ Day, Hour, Commits }) => ({
@@ -68,7 +71,6 @@ const combineReducers = obj => (initialState = {}, action) =>
     initialState
   );
 
-// Reducers
 const user = (state = initialState.user, action) => {
   switch (action.type) {
     case "USER_FETCHING":
@@ -181,16 +183,24 @@ const SearchResults = ({
         />
       </div>
       <div className="container-lg d-flex flex-wrap flex-justify-around mb-4">
-        <BeeSwarmChart
-          commitsByHour={state.punchcards.data}
-          isLoading={state.punchcards.isLoading}
-          error={state.punchcards.error}
-        />
-        <MultiLineChart
-          commitsByHour={state.punchcards.data}
-          isLoading={state.punchcards.isLoading}
-          error={state.punchcards.error}
-        />
+        {state.punchcards.isLoading ? (
+          <LoadingWheel text="Commits by week-hour" />
+        ) : state.punchcards.error ? (
+          toast.error(state.punchcards.error) && (
+            <span>Something went wrong!</span>
+          )
+        ) : (
+          <BeeSwarmChart commitsByHour={state.punchcards.data} />
+        )}
+        {state.punchcards.isLoading ? (
+          <LoadingWheel text="Daily commits" />
+        ) : state.punchcards.error ? (
+          toast.error(state.punchcards.error) && (
+            <span>Something went wrong!</span>
+          )
+        ) : (
+          <MultiLineChart commitsByHour={state.punchcards.data} />
+        )}
       </div>
     </>
   );
