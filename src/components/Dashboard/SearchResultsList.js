@@ -18,7 +18,7 @@ const SearchResultsList = ({ results }) => (
             height="72"
           />
           <h4 className="alt-h4 ml-2">{username}</h4>
-          <div class="bg-blue position-absolute bottom-0 left-0 py-1 width-full" />
+          <div className="bg-blue position-absolute bottom-0 left-0 py-1 width-full" />
         </div>
       </Link>
     ))}
