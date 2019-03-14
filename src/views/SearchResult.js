@@ -11,6 +11,7 @@ import {
   BeeSwarmChart,
   MultiLineChart
 } from "../components/SearchResults";
+import NotFound from "./NotFound";
 
 import "./SearchResult.scss";
 
@@ -136,41 +137,46 @@ const SearchResults = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const dispatchError = handleError(dispatch);
 
-  useEffect(() => {
-    [
-      { type: "LANGUAGES_FETCHING" },
-      { type: "USER_FETCHING" },
-      { type: "PUNCHCARDS_FETCHING" }
-    ].map(dispatch);
-    Axios.get(GH_USER_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "USER_FETCH_SUCCESS",
-          payload: data
-        });
-      })
-      .catch(dispatchError("user"));
-    Axios.get(LANGUAGES_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "LANGUAGES_FETCH_SUCCESS",
-          payload: parsers.languages(data)
-        });
-      })
-      .catch(dispatchError("languages"));
-    Axios.get(PUNCHCARDS_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "PUNCHCARDS_FETCH_SUCCESS",
-          payload: parsers.punchcards(data)
-        });
-      })
-      .catch(dispatchError("punchcards"));
-  }, []);
+  useEffect(
+    () => {
+      [
+        { type: "LANGUAGES_FETCHING" },
+        { type: "USER_FETCHING" },
+        { type: "PUNCHCARDS_FETCHING" }
+      ].map(dispatch);
+      Axios.get(GH_USER_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "USER_FETCH_SUCCESS",
+            payload: data
+          });
+        })
+        .catch(dispatchError("user"));
+      Axios.get(LANGUAGES_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "LANGUAGES_FETCH_SUCCESS",
+            payload: parsers.languages(data)
+          });
+        })
+        .catch(dispatchError("languages"));
+      Axios.get(PUNCHCARDS_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "PUNCHCARDS_FETCH_SUCCESS",
+            payload: parsers.punchcards(data)
+          });
+        })
+        .catch(dispatchError("punchcards"));
+    },
+    [username]
+  );
 
   toast.error(state.punchcards.error);
 
-  return (
+  return state.user.error ? (
+    <NotFound />
+  ) : (
     <>
       <div className="Box py-2 container-lg d-flex flex-column flex-lg-row col-md-6 col-lg-12 flex-wrap flex-justify-around mt-4">
         <ProfileHeader
