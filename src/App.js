@@ -13,7 +13,7 @@ import "./App.scss";
 import { Provider } from "./context/context";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Header from "./components/Header/Header";
-import LoadingBar from "./components/LoadingBar/LoadingBar";
+import LoadingBar from "./components/Loading/LoadingBar";
 import DashboardView from "./views/DashboardView";
 import LoginView from "./views/LoginView";
 import NotFound from "./views/NotFound";
