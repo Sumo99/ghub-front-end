@@ -19,7 +19,7 @@ const PUNCHCARDS_API = username =>
 
 // @TODO Add to this dictionary
 const LANG_COLOR_DICT = {
-  JavaScript: "#f1e05a",
+  JavaScript: "##f1e05a",
   CSS: "#563d7c",
   HTML: "#e34c26",
   Makefile: "#427819"
