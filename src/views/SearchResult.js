@@ -49,10 +49,10 @@ const initialState = {
 const parsers = {
   user: x => x,
   languages: dict =>
-    Object.entries(dict).map(([language, size]) => ({
-      language,
+    Object.entries(dict).map(([name, size]) => ({
+      name,
       size,
-      color: LANG_COLOR_DICT[language] || "black"
+      color: LANG_COLOR_DICT[name] || "black"
     })),
   punchcards: obj =>
     Object.values(obj).map(({ Day, Hour, Commits }) => ({
@@ -71,7 +71,6 @@ const combineReducers = obj => (initialState = {}, action) =>
     initialState
   );
 
-// Reducers
 const user = (state = initialState.user, action) => {
   switch (action.type) {
     case "USER_FETCHING":
