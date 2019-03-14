@@ -166,7 +166,7 @@ const SearchResults = ({
         });
       })
       .catch(dispatchError("punchcards"));
-  }, []);
+  }, [username]);
 
   toast.error(state.punchcards.error);
 

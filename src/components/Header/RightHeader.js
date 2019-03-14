@@ -8,7 +8,7 @@ const RightHeader = props => {
   return (
     <React.Fragment>
       <Nav authorized={props.authorized} dispatch={props.dispatch} />
-      {props.authorized && <Search dispatch={props.dispatch} />}
+      {props.authorized && <Search />}
     </React.Fragment>
   );
 };
