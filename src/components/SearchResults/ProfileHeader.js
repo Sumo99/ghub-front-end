@@ -50,6 +50,7 @@ const ProfileHeader = ({ user, isLoading, error }) => {
             <a
               className="text-blue ml-3 f5"
               target="_blank"
+              rel="noopener noreferrer"
               href={user.html_url}
             >
               @{user.login}
@@ -70,7 +71,12 @@ const ProfileHeader = ({ user, isLoading, error }) => {
           <h4 className="mt-2 Subhead">
             <Octicon icon={Link} size="small" />
             {user.blog ? (
-              <a className="text-gray ml-3 f5" target="_blank" href={user.blog}>
+              <a
+                className="text-gray ml-3 f5"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={user.blog}
+              >
                 {user.blog}
               </a>
             ) : (
@@ -84,11 +90,13 @@ const ProfileHeader = ({ user, isLoading, error }) => {
 
 export const ProfileHeaderProps = {
   user: PropTypes.shape({
-    avatar_url: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    login: PropTypes.string.isRequired
-  })
+    avatar_url: PropTypes.string,
+    createdAt: PropTypes.string,
+    name: PropTypes.string,
+    login: PropTypes.string
+  }),
+  error: PropTypes.string,
+  isLoading: PropTypes.bool
 };
 
 ProfileHeader.propTypes = ProfileHeaderProps;

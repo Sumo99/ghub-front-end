@@ -1,6 +1,5 @@
 import React, { useEffect, useReducer } from "react";
 
-import { toast } from "react-toastify";
 import LoadingWheel from "../components/Loading/LoadingWheel";
 import Axios from "axios";
 import Octicon, { Alert } from "@githubprimer/octicons-react";
@@ -18,9 +17,9 @@ import "./SearchResult.scss";
 
 const GH_USER_API = username => `https://api.github.com/users/${username}`;
 const LANGUAGES_API = username =>
-  `https://pipelinepy-herokuapp-com.global.ssl.fastly.net/?username=${username}`;
+  `https://pipelinepy.herokuapp.com/?username=${username}`;
 const PUNCHCARDS_API = username =>
-  `https://calm-lake-18364-herokuapp-com.global.ssl.fastly.net/?username=${username}`;
+  `https://calm-lake-18364.herokuapp.com/?username=${username}`;
 
 // @TODO Add to this dictionary
 const LANG_COLOR_DICT = {
@@ -138,42 +137,37 @@ const SearchResults = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const dispatchError = handleError(dispatch);
 
-  useEffect(
-    () => {
-      [
-        { type: "LANGUAGES_FETCHING" },
-        { type: "USER_FETCHING" },
-        { type: "PUNCHCARDS_FETCHING" }
-      ].map(dispatch);
-      Axios.get(GH_USER_API(username))
-        .then(({ data }) => {
-          dispatch({
-            type: "USER_FETCH_SUCCESS",
-            payload: data
-          });
-        })
-        .catch(dispatchError("user"));
-      Axios.get(LANGUAGES_API(username))
-        .then(({ data }) => {
-          dispatch({
-            type: "LANGUAGES_FETCH_SUCCESS",
-            payload: parsers.languages(data)
-          });
-        })
-        .catch(dispatchError("languages"));
-      Axios.get(PUNCHCARDS_API(username))
-        .then(({ data }) => {
-          dispatch({
-            type: "PUNCHCARDS_FETCH_SUCCESS",
-            payload: parsers.punchcards(data)
-          });
-        })
-        .catch(dispatchError("punchcards"));
-    },
-    [username]
-  );
-
-  toast.error(state.punchcards.error);
+  useEffect(() => {
+    [
+      { type: "LANGUAGES_FETCHING" },
+      { type: "USER_FETCHING" },
+      { type: "PUNCHCARDS_FETCHING" }
+    ].map(a => dispatch(a));
+    Axios.get(GH_USER_API(username))
+      .then(({ data }) => {
+        dispatch({
+          type: "USER_FETCH_SUCCESS",
+          payload: data
+        });
+      })
+      .catch(dispatchError("user"));
+    Axios.get(LANGUAGES_API(username))
+      .then(({ data }) => {
+        dispatch({
+          type: "LANGUAGES_FETCH_SUCCESS",
+          payload: parsers.languages(data)
+        });
+      })
+      .catch(dispatchError("languages"));
+    Axios.get(PUNCHCARDS_API(username))
+      .then(({ data }) => {
+        dispatch({
+          type: "PUNCHCARDS_FETCH_SUCCESS",
+          payload: parsers.punchcards(data)
+        });
+      })
+      .catch(dispatchError("punchcards"));
+  }, [username]);
 
   return state.user.error ? (
     <NotFound />

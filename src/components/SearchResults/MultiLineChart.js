@@ -75,80 +75,77 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
     svg.append("g").call(yAxis);
   }, []);
 
-  useEffect(
-    () => {
-      const svg = select(ref.current).datum(data);
+  useEffect(() => {
+    const svg = select(ref.current).datum(data);
 
-      svg.selectAll("path").remove();
-      svg.selectAll("clipPath").remove();
+    svg.selectAll("path").remove();
+    svg.selectAll("clipPath").remove();
 
-      svg
-        .append("clipPath")
-        .attr("id", "above")
-        .append("path")
-        .attr(
-          "d",
-          area()
-            .curve(curve)
-            .x(({ hour }) => x(hour))
-            .y0(0)
-            .y1(({ avgValue }) => y(avgValue))
-        );
+    svg
+      .append("clipPath")
+      .attr("id", "above")
+      .append("path")
+      .attr(
+        "d",
+        area()
+          .curve(curve)
+          .x(({ hour }) => x(hour))
+          .y0(0)
+          .y1(({ avgValue }) => y(avgValue))
+      );
 
-      svg
-        .append("clipPath")
-        .attr("id", "below")
-        .append("path")
-        .attr(
-          "d",
-          area()
-            .curve(curve)
-            .x(({ hour }) => x(hour))
-            .y0(height)
-            .y1(({ avgValue }) => y(avgValue))
-        );
+    svg
+      .append("clipPath")
+      .attr("id", "below")
+      .append("path")
+      .attr(
+        "d",
+        area()
+          .curve(curve)
+          .x(({ hour }) => x(hour))
+          .y0(height)
+          .y1(({ avgValue }) => y(avgValue))
+      );
 
-      svg
-        .append("path")
-        .attr("clip-path", "url(#above)")
-        .attr("fill", colors[1])
-        .attr(
-          "d",
-          area()
-            .curve(curve)
-            .x(({ hour }) => x(hour))
-            .y0(height)
-            .y1(({ dayValue }) => y(dayValue))
-        );
+    svg
+      .append("path")
+      .attr("clip-path", "url(#above)")
+      .attr("fill", colors[1])
+      .attr(
+        "d",
+        area()
+          .curve(curve)
+          .x(({ hour }) => x(hour))
+          .y0(height)
+          .y1(({ dayValue }) => y(dayValue))
+      );
 
-      svg
-        .append("path")
-        .attr("clip-path", "url(#below)")
-        .attr("fill", colors[0])
-        .attr(
-          "d",
-          area()
-            .curve(curve)
-            .x(({ hour }) => x(hour))
-            .y0(0)
-            .y1(({ dayValue }) => y(dayValue))
-        );
+    svg
+      .append("path")
+      .attr("clip-path", "url(#below)")
+      .attr("fill", colors[0])
+      .attr(
+        "d",
+        area()
+          .curve(curve)
+          .x(({ hour }) => x(hour))
+          .y0(0)
+          .y1(({ dayValue }) => y(dayValue))
+      );
 
-      svg
-        .append("path")
-        .attr("fill", "none")
-        .attr("stroke", "black")
-        .attr("stroke-width", 2)
-        .attr(
-          "d",
-          line()
-            .curve(curve)
-            .x(({ hour }) => x(hour))
-            .y(({ dayValue }) => y(dayValue))
-        );
-    },
-    [dayValues]
-  );
+    svg
+      .append("path")
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", 2)
+      .attr(
+        "d",
+        line()
+          .curve(curve)
+          .x(({ hour }) => x(hour))
+          .y(({ dayValue }) => y(dayValue))
+      );
+  }, [dayValues]);
 
   return (
     <div className="mt-2 col-md-7">
@@ -213,6 +210,7 @@ const MultiLineChart = ({ commitsByHour }) => {
             <li
               className="Box-row hover-li"
               onMouseEnter={handleMouseEnter(day)}
+              key={day}
             >
               {day}
             </li>
@@ -245,7 +243,7 @@ const DiffChartProps = PropTypes.shape({
   ).isRequired,
   dayValues: PropTypes.arrayOf(PropTypes.number.isRequired),
   maxY: PropTypes.number.isRequired
-});
+}).isRequired;
 
 DiffChart.propTypes = DiffChartProps;
 
