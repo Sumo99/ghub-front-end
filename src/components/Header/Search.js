@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 import { search } from "../../context/actions";
 
@@ -8,7 +9,8 @@ const Search = props => {
 
   const handleFormSubmit = (e, dispatch) => {
     e.preventDefault();
-    search(dispatch, query);
+    // search(dispatch, query);
+    props.history.push(`/results/${query}`);
   };
   return (
     <div className="d-flex flex-self-auto flex-justify-end mr-2 mr-md-3 search-form">
@@ -37,4 +39,4 @@ Search.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
-export default Search;
+export default withRouter(Search);
