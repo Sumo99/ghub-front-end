@@ -3,6 +3,7 @@ import React, { useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import LoadingWheel from "../components/Loading/LoadingWheel";
 import Axios from "axios";
+import Octicon, { Alert } from "@githubprimer/octicons-react";
 
 import { DAYS_OF_WEEK, formatHour } from "../lib";
 import {
@@ -194,14 +195,20 @@ const SearchResults = ({
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Commits by week-hour" />
         ) : state.punchcards.error ? (
-          <span>Something went wrong!</span>
+          <div className="d-flex flex-column flex-justify-center flex-items-center">
+            <Octicon icon={Alert} size="large" />
+            <span>Something went wrong.</span>
+          </div>
         ) : (
           <BeeSwarmChart commitsByHour={state.punchcards.data} />
         )}
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Daily commits" />
         ) : state.punchcards.error ? (
-          <span>Something went wrong!</span>
+          <div className="d-flex flex-column flex-justify-center flex-items-center">
+            <Octicon icon={Alert} size="large" />
+            <span>Something went wrong.</span>
+          </div>
         ) : (
           <MultiLineChart commitsByHour={state.punchcards.data} />
         )}
