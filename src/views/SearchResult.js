@@ -3,6 +3,7 @@ import React, { useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import LoadingWheel from "../components/Loading/LoadingWheel";
 import Axios from "axios";
+import Octicon, { Alert } from "@githubprimer/octicons-react";
 
 import { DAYS_OF_WEEK, formatHour } from "../lib";
 import {
@@ -11,6 +12,7 @@ import {
   BeeSwarmChart,
   MultiLineChart
 } from "../components/SearchResults";
+import NotFound from "./NotFound";
 
 import "./SearchResult.scss";
 
@@ -136,41 +138,46 @@ const SearchResults = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const dispatchError = handleError(dispatch);
 
-  useEffect(() => {
-    [
-      { type: "LANGUAGES_FETCHING" },
-      { type: "USER_FETCHING" },
-      { type: "PUNCHCARDS_FETCHING" }
-    ].map(dispatch);
-    Axios.get(GH_USER_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "USER_FETCH_SUCCESS",
-          payload: data
-        });
-      })
-      .catch(dispatchError("user"));
-    Axios.get(LANGUAGES_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "LANGUAGES_FETCH_SUCCESS",
-          payload: parsers.languages(data)
-        });
-      })
-      .catch(dispatchError("languages"));
-    Axios.get(PUNCHCARDS_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "PUNCHCARDS_FETCH_SUCCESS",
-          payload: parsers.punchcards(data)
-        });
-      })
-      .catch(dispatchError("punchcards"));
-  }, [username]);
+  useEffect(
+    () => {
+      [
+        { type: "LANGUAGES_FETCHING" },
+        { type: "USER_FETCHING" },
+        { type: "PUNCHCARDS_FETCHING" }
+      ].map(dispatch);
+      Axios.get(GH_USER_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "USER_FETCH_SUCCESS",
+            payload: data
+          });
+        })
+        .catch(dispatchError("user"));
+      Axios.get(LANGUAGES_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "LANGUAGES_FETCH_SUCCESS",
+            payload: parsers.languages(data)
+          });
+        })
+        .catch(dispatchError("languages"));
+      Axios.get(PUNCHCARDS_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "PUNCHCARDS_FETCH_SUCCESS",
+            payload: parsers.punchcards(data)
+          });
+        })
+        .catch(dispatchError("punchcards"));
+    },
+    [username]
+  );
 
   toast.error(state.punchcards.error);
 
-  return (
+  return state.user.error ? (
+    <NotFound />
+  ) : (
     <>
       <div className="Box py-2 container-lg d-flex flex-column flex-lg-row col-md-6 col-lg-12 flex-wrap flex-justify-around mt-4">
         <ProfileHeader
@@ -188,14 +195,20 @@ const SearchResults = ({
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Commits by week-hour" />
         ) : state.punchcards.error ? (
-          <span>Something went wrong!</span>
+          <div className="d-flex flex-column flex-justify-center flex-items-center">
+            <Octicon icon={Alert} size="large" />
+            <span>Something went wrong.</span>
+          </div>
         ) : (
           <BeeSwarmChart commitsByHour={state.punchcards.data} />
         )}
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Daily commits" />
         ) : state.punchcards.error ? (
-          <span>Something went wrong!</span>
+          <div className="d-flex flex-column flex-justify-center flex-items-center">
+            <Octicon icon={Alert} size="large" />
+            <span>Something went wrong.</span>
+          </div>
         ) : (
           <MultiLineChart commitsByHour={state.punchcards.data} />
         )}
