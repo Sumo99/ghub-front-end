@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
-const Search = () => {
+const Search = props => {
   const [query, setQuery] = useState("");
 
   const handleFormSubmit = e => {
