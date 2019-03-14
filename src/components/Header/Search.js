@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
-import { search } from "../../context/actions";
-
-const Search = props => {
+const Search = () => {
   const [query, setQuery] = useState("");
 
-  const handleFormSubmit = (e, dispatch) => {
+  const handleFormSubmit = e => {
     e.preventDefault();
-    // search(dispatch, query);
     props.history.push(`/results/${query}`);
   };
   return (
@@ -18,7 +14,7 @@ const Search = props => {
         <form
           autoComplete="off"
           className="mb-0 position-relative mx-2"
-          onSubmit={e => handleFormSubmit(e, props.dispatch)}
+          onSubmit={handleFormSubmit}
         >
           <input
             type="text"
@@ -33,10 +29,6 @@ const Search = props => {
       </div>
     </div>
   );
-};
-
-Search.propTypes = {
-  dispatch: PropTypes.func.isRequired
 };
 
 export default withRouter(Search);
