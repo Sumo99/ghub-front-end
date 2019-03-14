@@ -56,7 +56,7 @@ export default class LoginView extends Component {
             <h2 className="text-shadow-light f2-light d-block py-3">
               Sign in to GitHub User Breakdown
             </h2>
-            <div className="Box col-11 col-sm-8 col-md-6 col-lg-3 box-shadow">
+            <div className="Box col-11 col-sm-8 col-md-6 col-lg-4 col-xl-3 box-shadow">
               {this.state.isNewRegistrant ? (
                 <RegisterForm
                   email={this.state.email}
