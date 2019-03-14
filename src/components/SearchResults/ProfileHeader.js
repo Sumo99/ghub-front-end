@@ -42,8 +42,8 @@ const ProfileHeader = ({ user, isLoading, error }) => {
         <div className="vcard-names-container js-sticky js-user-profile-sticky-fields">
           <h2 className="Subhead mb-1">{user.name}</h2>
           <span className="text-gray f5 d-block mb-3">
-            GitHub member since {distanceInWordsToNow(new Date(user.createdAt))}{" "}
-            ago
+            GitHub member since{" "}
+            {distanceInWordsToNow(new Date(user.created_at))} ago
           </span>
           <h4 className="mt-2 Subhead">
             <Octicon icon={MarkGithub} size="small" />
