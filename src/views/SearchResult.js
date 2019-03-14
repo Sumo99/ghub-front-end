@@ -16,9 +16,9 @@ import "./SearchResult.scss";
 
 const GH_USER_API = username => `https://api.github.com/users/${username}`;
 const LANGUAGES_API = username =>
-  `https://pipelinepy.herokuapp.com/?username=${username}`;
+  `https://pipelinepy-herokuapp-com.global.ssl.fastly.net/?username=${username}`;
 const PUNCHCARDS_API = username =>
-  `https://calm-lake-18364.herokuapp.com/?username=${username}`;
+  `https://calm-lake-18364-herokuapp-com.global.ssl.fastly.net/?username=${username}`;
 
 // @TODO Add to this dictionary
 const LANG_COLOR_DICT = {
@@ -168,6 +168,8 @@ const SearchResults = ({
       .catch(dispatchError("punchcards"));
   }, []);
 
+  toast.error(state.punchcards.error);
+
   return (
     <>
       <div className="Box py-2 container-lg d-flex flex-column flex-lg-row col-md-6 col-lg-12 flex-wrap flex-justify-around mt-4">
@@ -186,18 +188,14 @@ const SearchResults = ({
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Commits by week-hour" />
         ) : state.punchcards.error ? (
-          toast.error(state.punchcards.error) && (
-            <span>Something went wrong!</span>
-          )
+          <span>Something went wrong!</span>
         ) : (
           <BeeSwarmChart commitsByHour={state.punchcards.data} />
         )}
         {state.punchcards.isLoading ? (
           <LoadingWheel text="Daily commits" />
         ) : state.punchcards.error ? (
-          toast.error(state.punchcards.error) && (
-            <span>Something went wrong!</span>
-          )
+          <span>Something went wrong!</span>
         ) : (
           <MultiLineChart commitsByHour={state.punchcards.data} />
         )}
