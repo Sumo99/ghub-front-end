@@ -17,7 +17,7 @@ const LANGUAGES_API = username =>
 const PUNCHCARDS_API = username =>
   `https://calm-lake-18364.herokuapp.com/?username=${username}`;
 
-// @TODO Add to this dictionary
+// Every langauge on github is included!
 const LANG_COLOR_DICT = {
     "1C Enterprise": "#814CCC",
     "ABAP": "#E8274B",
