@@ -1,16 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-// I'm importing as named imports from d3 so that hopefully Webpack
-// can do its tree-shaking thing and not import _all_ of D3
 import { axisBottom, extent, select, scaleLinear, scaleBand } from "d3";
-import { prop } from "lodash/fp";
 import { dodge, parseWeekHour, DAYS_OF_WEEK } from "../../lib";
 
-// Mock data, not including here because it's a massive file
-// but follows the schema specified in BeeSwarmChartProps below
-import { data as _data } from "./data";
-
-const BeeSwarmChart = ({ commitsByHour = _data }) => {
+const BeeSwarmChart = ({ commitsByHour, isLoading, error }) => {
   const ref = useRef();
   const [width, height] = [800, 360];
   const margin = {
@@ -63,7 +56,14 @@ const BeeSwarmChart = ({ commitsByHour = _data }) => {
       .attr("r", radius);
   }, []);
 
-  return (
+  return isLoading ? (
+    <h3>Loading</h3>
+  ) : error ? (
+    <>
+      <h3>Error</h3>
+      <p>{error}</p>
+    </>
+  ) : (
     <section className="Box col-md-10 px-4 mt-4">
       <h2 className="py-3 Subhead">Total commits by week-hour</h2>
       <div className="mt-2">
