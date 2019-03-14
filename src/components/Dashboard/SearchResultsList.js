@@ -1,26 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const SearchResultsList = ({ results }) => (
-  <div className="Box mt-4">
-    <ul>
-      {results.map(({ id, username, email, activity }) => (
-        <li className="Box-row d-flex flex-justify-between" key={id}>
-          <strong>{username}</strong> <span className="ml-4">{email}</span>
-        </li>
-      ))}
-    </ul>
+  <div className=" mt-4 d-flex flex-column flex-md-row flex-wrap">
+    {results.map(({ username, avatar }) => (
+      <Link to={`/results/${username}`} key={username}>
+        <div
+          className="Box d-flex flex-justify-start flex-items-center"
+          style={{ minWidth: "200px" }}
+        >
+          <img
+            src={avatar}
+            alt="avatar"
+            className="avatar"
+            width="72"
+            height="72"
+          />
+          <strong className="ml-3">{username}</strong>
+        </div>
+      </Link>
+    ))}
   </div>
 );
 
 export const SearchResultsListProps = {
   results: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
       username: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      // I'm not sure what this is supposed to be yet
-      activity: PropTypes.arrayOf(PropTypes.object)
+      avatar: PropTypes.string.isRequired
     }).isRequired
   ).isRequired
 };

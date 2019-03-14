@@ -56,7 +56,8 @@ const reducer = (state, action) => {
         ...state,
         results: action.payload,
         error: "",
-        loading: false
+        loading: false,
+        results: action.payload
       };
     case "SEARCH_FAILURE":
       return {
