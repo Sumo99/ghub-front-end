@@ -15,7 +15,6 @@ import {
 } from "d3";
 import { reduce } from "lodash/fp";
 
-import { data as _data } from "./data";
 import { formatHour, DAYS_OF_WEEK } from "../../lib";
 
 import "./MultiLineChart.scss";
@@ -158,7 +157,7 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
   );
 };
 
-const MultiLineChart = ({ commitsByHour = _data }) => {
+const MultiLineChart = ({ commitsByHour, isLoading, error }) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case "SHOW_AVERAGE":
@@ -205,7 +204,14 @@ const MultiLineChart = ({ commitsByHour = _data }) => {
     });
   };
 
-  return (
+  return isLoading ? (
+    <h3>Loading</h3>
+  ) : error ? (
+    <>
+      <h3>Error</h3>
+      <p>{error}</p>
+    </>
+  ) : (
     <section className="Box col-md-10 px-4 mt-4">
       <h2 className="Subhead py-3">Daily commits per hour</h2>
       <div className="d-flex mb-3">
