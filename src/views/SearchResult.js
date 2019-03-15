@@ -187,7 +187,7 @@ const SearchResults = ({
             <LoadingWheel text="Commits by week-hour" />
           </div>
         ) : state.punchcards.error ? (
-          <div className="d-flex flex-column flex-justify-center flex-items-center">
+          <div className="pt-4 d-flex flex-column flex-justify-center flex-items-center">
             <Octicon icon={Alert} size="large" />
             <span>Something went wrong.</span>
           </div>
@@ -199,7 +199,7 @@ const SearchResults = ({
             <LoadingWheel text="Daily commits" />
           </div>
         ) : state.punchcards.error ? (
-          <div className="d-flex flex-column flex-justify-center flex-items-center">
+          <div className="pt-4 d-flex flex-column flex-justify-center flex-items-center">
             <Octicon icon={Alert} size="large" />
             <span>Something went wrong.</span>
           </div>
