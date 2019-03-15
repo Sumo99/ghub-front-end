@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { axisBottom, extent, select, scaleLinear, scaleBand } from "d3";
+import { axisBottom, extent, range, select, scaleLinear, scaleBand } from "d3";
 import { dodge, parseWeekHour, DAYS_OF_WEEK } from "../../lib";
+
+const LT_BLUE = "#dbedff";
 
 const BeeSwarmChart = ({ commitsByHour }) => {
   const ref = useRef();
@@ -44,6 +46,20 @@ const BeeSwarmChart = ({ commitsByHour }) => {
     const svg = select(ref.current);
 
     svg.append("g").call(xAxis);
+
+    svg
+      .append("g")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .selectAll("rect")
+      .data(range(7).filter((_, ix) => ix % 2 === 0))
+      .enter()
+      .append("rect")
+      .attr("y", 0)
+      .attr("x", n => n * x_.bandwidth())
+      .attr("width", x_.bandwidth())
+      .attr("height", height - margin.bottom)
+      .attr("fill", LT_BLUE)
+      .attr("style", "opacity: 0.2");
 
     svg
       .append("g")
