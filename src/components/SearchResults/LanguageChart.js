@@ -22,11 +22,12 @@ const LanguageChart = ({ languages, isLoading, error }) => {
     );
   } else
     return (
-      <section className="col-12 col-lg-6 px-4">
+      <section className="col-12 col-lg-6 px-4 pb-2">
         <h2 className="Subhead">Language Usage</h2>
         <dl className="mt-2 list-style-none">
           {sortBy("size", languages)
             .reverse()
+            .filter(({ size }) => size / sizeTotal > 0.02)
             .map(({ name, color, size }) => (
               <React.Fragment key={name}>
                 <dt className="pt-2">
