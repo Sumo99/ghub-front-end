@@ -4,6 +4,7 @@ import LoadingWheel from "../components/Loading/LoadingWheel";
 import Axios from "axios";
 import Octicon, { Alert } from "@githubprimer/octicons-react";
 
+import COLORS from "../lib/colors"
 import { DAYS_OF_WEEK, formatHour } from "../lib";
 import {
   ProfileHeader,
@@ -20,14 +21,6 @@ const LANGUAGES_API = username =>
   `https://pipelinepy.herokuapp.com/?username=${username}`;
 const PUNCHCARDS_API = username =>
   `https://calm-lake-18364.herokuapp.com/?username=${username}`;
-
-// @TODO Add to this dictionary
-const LANG_COLOR_DICT = {
-  JavaScript: "#f1e05a",
-  CSS: "#563d7c",
-  HTML: "#e34c26",
-  Makefile: "#427819"
-};
 
 const initialState = {
   user: {
@@ -53,7 +46,7 @@ const parsers = {
     Object.entries(dict).map(([name, size]) => ({
       name,
       size,
-      color: LANG_COLOR_DICT[name] || "black"
+      color: COLORS[name] || "black"
     })),
   punchcards: obj =>
     Object.values(obj).map(({ Day, Hour, Commits }) => ({
