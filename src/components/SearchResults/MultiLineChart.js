@@ -54,7 +54,19 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
     .range([height - margin.bottom, margin.top]);
 
   const yAxis = g =>
-    g.attr("transform", `translate(${margin.left}, 0)`).call(axisLeft(y));
+    g
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(axisLeft(y))
+      .call(g => g.select(".domain").remove())
+      .call(g =>
+        g
+          .select(".tick:last-of-type text")
+          .clone()
+          .attr("x", 3)
+          .attr("text-anchor", "start")
+          .attr("font-weight", "bold")
+          .text("Commits per Hour")
+      );
 
   const LT_RED = "#ffdce0";
   const LT_BLUE = "#dbedff";
@@ -73,6 +85,31 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
 
     svg.append("g").call(xAxis);
     svg.append("g").call(yAxis);
+
+    // This feels wrong for a number of reasons
+    colors
+      .map(
+        (color, ix) =>
+          ix === 0
+            ? { text: "Below weekly average", color }
+            : { text: "Above weekly average", color }
+      )
+      .reverse()
+      .forEach(({ color, text }, ix) => {
+        svg
+          .append("rect")
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("x", width - margin.right)
+          .attr("y", margin.top + 25 * ix)
+          .attr("fill", color);
+        svg
+          .append("text")
+          .attr("x", width - margin.right - 10)
+          .attr("y", margin.top + 25 * ix + 15)
+          .text(text)
+          .attr("text-anchor", "end");
+      });
   }, []);
 
   useEffect(
