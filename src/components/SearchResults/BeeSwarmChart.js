@@ -5,7 +5,7 @@ import { dodge, parseWeekHour, DAYS_OF_WEEK } from "../../lib";
 
 const BeeSwarmChart = ({ commitsByHour }) => {
   const ref = useRef();
-  const [width, height] = [800, 360];
+  const [width, height] = [975, 520];
   const margin = {
     top: 20,
     right: 20,
@@ -37,7 +37,7 @@ const BeeSwarmChart = ({ commitsByHour }) => {
       .attr("transform", `translate(0, ${height - margin.bottom})`)
       .call(axisBottom(x_).tickSizeOuter(0));
 
-  const radius = 2;
+  const radius = 2.5;
   const padding = 1;
 
   useEffect(() => {
@@ -57,9 +57,9 @@ const BeeSwarmChart = ({ commitsByHour }) => {
   }, []);
 
   return (
-    <section className="Box col-md-10 px-4 mt-4">
-      <h2 className="py-3 Subhead">Total commits by week-hour</h2>
-      <div className="mt-2">
+    <section className="Box col-md-12 px-3 mt-4">
+      <h2 className="Subhead py-3">Total commits by week-hour</h2>
+      <div className="mt-2 d-flex flex-justify-center">
         <svg ref={ref} width={width} height={height} />
       </div>
     </section>
