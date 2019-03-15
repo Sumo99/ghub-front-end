@@ -4,7 +4,7 @@ import LoadingWheel from "../components/Loading/LoadingWheel";
 import Axios from "axios";
 import Octicon, { Alert } from "@githubprimer/octicons-react";
 
-import COLORS from "../lib/colors"
+import COLORS from "../lib/colors";
 import { DAYS_OF_WEEK, formatHour } from "../lib";
 import {
   ProfileHeader,
@@ -130,37 +130,40 @@ const SearchResults = ({
   const [state, dispatch] = useReducer(reducer, initialState);
   const dispatchError = handleError(dispatch);
 
-  useEffect(() => {
-    [
-      { type: "LANGUAGES_FETCHING" },
-      { type: "USER_FETCHING" },
-      { type: "PUNCHCARDS_FETCHING" }
-    ].map(a => dispatch(a));
-    Axios.get(GH_USER_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "USER_FETCH_SUCCESS",
-          payload: data
-        });
-      })
-      .catch(dispatchError("user"));
-    Axios.get(LANGUAGES_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "LANGUAGES_FETCH_SUCCESS",
-          payload: parsers.languages(data)
-        });
-      })
-      .catch(dispatchError("languages"));
-    Axios.get(PUNCHCARDS_API(username))
-      .then(({ data }) => {
-        dispatch({
-          type: "PUNCHCARDS_FETCH_SUCCESS",
-          payload: parsers.punchcards(data)
-        });
-      })
-      .catch(dispatchError("punchcards"));
-  }, [username]);
+  useEffect(
+    () => {
+      [
+        { type: "LANGUAGES_FETCHING" },
+        { type: "USER_FETCHING" },
+        { type: "PUNCHCARDS_FETCHING" }
+      ].map(a => dispatch(a));
+      Axios.get(GH_USER_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "USER_FETCH_SUCCESS",
+            payload: data
+          });
+        })
+        .catch(dispatchError("user"));
+      Axios.get(LANGUAGES_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "LANGUAGES_FETCH_SUCCESS",
+            payload: parsers.languages(data)
+          });
+        })
+        .catch(dispatchError("languages"));
+      Axios.get(PUNCHCARDS_API(username))
+        .then(({ data }) => {
+          dispatch({
+            type: "PUNCHCARDS_FETCH_SUCCESS",
+            payload: parsers.punchcards(data)
+          });
+        })
+        .catch(dispatchError("punchcards"));
+    },
+    [username]
+  );
 
   return state.user.error ? (
     <NotFound />
@@ -180,7 +183,9 @@ const SearchResults = ({
       </div>
       <div className="container-lg d-flex flex-wrap flex-justify-around mb-4">
         {state.punchcards.isLoading ? (
-          <LoadingWheel text="Commits by week-hour" />
+          <div className="Box mt-4 px-4 py-4">
+            <LoadingWheel text="Commits by week-hour" />
+          </div>
         ) : state.punchcards.error ? (
           <div className="d-flex flex-column flex-justify-center flex-items-center">
             <Octicon icon={Alert} size="large" />
@@ -190,7 +195,9 @@ const SearchResults = ({
           <BeeSwarmChart commitsByHour={state.punchcards.data} />
         )}
         {state.punchcards.isLoading ? (
-          <LoadingWheel text="Daily commits" />
+          <div className="Box mt-4 px-4 py-4">
+            <LoadingWheel text="Daily commits" />
+          </div>
         ) : state.punchcards.error ? (
           <div className="d-flex flex-column flex-justify-center flex-items-center">
             <Octicon icon={Alert} size="large" />
