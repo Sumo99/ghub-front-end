@@ -23,7 +23,7 @@ import "./MultiLineChart.scss";
 const DiffChart = ({ avgData, dayValues, maxY }) => {
   const ref = useRef();
 
-  const [width, height] = [600, 360];
+  const [width, height] = [720, 360];
   const margin = {
     top: 20,
     right: 20,
@@ -54,7 +54,19 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
     .range([height - margin.bottom, margin.top]);
 
   const yAxis = g =>
-    g.attr("transform", `translate(${margin.left}, 0)`).call(axisLeft(y));
+    g
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(axisLeft(y))
+      .call(g => g.select(".domain").remove())
+      .call(g =>
+        g
+          .select(".tick:last-of-type text")
+          .clone()
+          .attr("x", 3)
+          .attr("text-anchor", "start")
+          .attr("font-weight", "bold")
+          .text("Commits per Hour")
+      );
 
   const LT_RED = "#ffdce0";
   const LT_BLUE = "#dbedff";
@@ -73,79 +85,107 @@ const DiffChart = ({ avgData, dayValues, maxY }) => {
 
     svg.append("g").call(xAxis);
     svg.append("g").call(yAxis);
+
+    // This feels wrong for a number of reasons
+    colors
+      .map(
+        (color, ix) =>
+          ix === 0
+            ? { text: "Below weekly average", color }
+            : { text: "Above weekly average", color }
+      )
+      .reverse()
+      .forEach(({ color, text }, ix) => {
+        svg
+          .append("rect")
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("x", width - margin.right)
+          .attr("y", margin.top + 25 * ix)
+          .attr("fill", color);
+        svg
+          .append("text")
+          .attr("x", width - margin.right - 10)
+          .attr("y", margin.top + 25 * ix + 15)
+          .text(text)
+          .attr("text-anchor", "end");
+      });
   }, []);
 
-  useEffect(() => {
-    const svg = select(ref.current).datum(data);
+  useEffect(
+    () => {
+      const svg = select(ref.current).datum(data);
 
-    svg.selectAll("path").remove();
-    svg.selectAll("clipPath").remove();
+      svg.selectAll("path").remove();
+      svg.selectAll("clipPath").remove();
 
-    svg
-      .append("clipPath")
-      .attr("id", "above")
-      .append("path")
-      .attr(
-        "d",
-        area()
-          .curve(curve)
-          .x(({ hour }) => x(hour))
-          .y0(0)
-          .y1(({ avgValue }) => y(avgValue))
-      );
+      svg
+        .append("clipPath")
+        .attr("id", "above")
+        .append("path")
+        .attr(
+          "d",
+          area()
+            .curve(curve)
+            .x(({ hour }) => x(hour))
+            .y0(0)
+            .y1(({ avgValue }) => y(avgValue))
+        );
 
-    svg
-      .append("clipPath")
-      .attr("id", "below")
-      .append("path")
-      .attr(
-        "d",
-        area()
-          .curve(curve)
-          .x(({ hour }) => x(hour))
-          .y0(height)
-          .y1(({ avgValue }) => y(avgValue))
-      );
+      svg
+        .append("clipPath")
+        .attr("id", "below")
+        .append("path")
+        .attr(
+          "d",
+          area()
+            .curve(curve)
+            .x(({ hour }) => x(hour))
+            .y0(height)
+            .y1(({ avgValue }) => y(avgValue))
+        );
 
-    svg
-      .append("path")
-      .attr("clip-path", "url(#above)")
-      .attr("fill", colors[1])
-      .attr(
-        "d",
-        area()
-          .curve(curve)
-          .x(({ hour }) => x(hour))
-          .y0(height)
-          .y1(({ dayValue }) => y(dayValue))
-      );
+      svg
+        .append("path")
+        .attr("clip-path", "url(#above)")
+        .attr("fill", colors[1])
+        .attr(
+          "d",
+          area()
+            .curve(curve)
+            .x(({ hour }) => x(hour))
+            .y0(height)
+            .y1(({ dayValue }) => y(dayValue))
+        );
 
-    svg
-      .append("path")
-      .attr("clip-path", "url(#below)")
-      .attr("fill", colors[0])
-      .attr(
-        "d",
-        area()
-          .curve(curve)
-          .x(({ hour }) => x(hour))
-          .y0(0)
-          .y1(({ dayValue }) => y(dayValue))
-      );
+      svg
+        .append("path")
+        .attr("clip-path", "url(#below)")
+        .attr("fill", colors[0])
+        .attr(
+          "d",
+          area()
+            .curve(curve)
+            .x(({ hour }) => x(hour))
+            .y0(0)
+            .y1(({ dayValue }) => y(dayValue))
+        );
 
-    svg
-      .append("path")
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-width", 2)
-      .attr(
-        "d",
-        line()
-          .curve(curve)
-          .x(({ hour }) => x(hour))
-          .y(({ dayValue }) => y(dayValue))
-      );
-  }, [dayValues]);
+      svg
+        .append("path")
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .attr("stroke-width", 2)
+        .attr(
+          "d",
+          line()
+            .curve(curve)
+            .x(({ hour }) => x(hour))
+            .y(({ dayValue }) => y(dayValue))
+        );
+    },
+    [dayValues]
+  );
 
   return (
     <div className="mt-2 col-md-7">
@@ -202,7 +242,7 @@ const MultiLineChart = ({ commitsByHour }) => {
   };
 
   return (
-    <section className="Box col-md-10 px-4 mt-4">
+    <section className="Box col-md-12 px-3 mt-4">
       <h2 className="Subhead py-3">Daily commits per hour</h2>
       <div className="d-flex mb-3">
         <ul className="Box col-md-3" onMouseLeave={handleMouseLeave}>
