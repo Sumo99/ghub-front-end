@@ -12,18 +12,23 @@ const Nav = props => {
   return (
     <div className="d-flex flex-justify-end">
       <nav className="flex-shrink-0 text-white" aria-label="Primary">
-        <NavLink
-          activeClassName="text-bold"
-          className="text-white px-2 px-md-1 px-lg-2"
-          exact
-          to={
-            props.authorized
-              ? "/dashboard"
-              : "https://distracted-hoover-00aed4.netlify.com/"
-          }
-        >
-          Home
-        </NavLink>
+        {props.authorized ? (
+          <NavLink
+            activeClassName="text-bold"
+            className="text-white px-2 px-md-1 px-lg-2"
+            exact
+            to={"/dashboard"}
+          >
+            Home
+          </NavLink>
+        ) : (
+          <a
+            className="text-white px-2 px-md-1 px-lg-2"
+            href="https://distracted-hoover-00aed4.netlify.com/"
+          >
+            Home
+          </a>
+        )}
         {props.authorized ? (
           <NavLink
             activeClassName="text-bold"
